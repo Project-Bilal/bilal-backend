@@ -1,13 +1,12 @@
 from bilal_backend import app
 import pychromecast
-from flask import request
 
 @app.route('/')
 def hello_world():
     return "Hello World"
 
 
-@app.route('/test-sound', methods ['POST', 'GET'])
+@app.route('/test-sound')
 def test_sound(speaker_name = 'Studio Display', audio_id = '1jishJEjKVBqMqLhR4uPv8X8hjOKIIvgS'):
     data = request.get_json()
     speaker_name = data['speaker_name']
