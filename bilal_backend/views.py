@@ -8,9 +8,6 @@ def hello_world():
 
 @app.route('/test-sound')
 def test_sound(speaker_name = 'Studio Display', audio_id = '1jishJEjKVBqMqLhR4uPv8X8hjOKIIvgS'):
-    data = request.get_json()
-    speaker_name = data['speaker_name']
-    audio_id = data['audio_id']
     chromecasts, browser = pychromecast.get_listed_chromecasts(friendly_names=[speaker_name])
     cast = chromecasts[0]
     cast.wait()
