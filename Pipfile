@@ -5,6 +5,8 @@ name = "pypi"
 
 [packages]
 flask = "*"
+pychromecast = "*"
+flask-restplus = "*"
 
 [dev-packages]
 
