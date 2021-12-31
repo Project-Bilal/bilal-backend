@@ -1,9 +1,10 @@
-from bilal_backend import app
-from flask import request
-from apiflask import Schema, input, output, abort
+from apiflask import APIBlueprint, Schema, input, output, abort
 from apiflask.fields import Integer, String
 from apiflask.validators import Length, OneOf
 import pychromecast
+
+test = APIBlueprint(import_name="Test Sound", name="Test Sound", tag="Test Sound",
+                    url_prefix='/test')
 
 
 class PlaySound(Schema):
@@ -15,12 +16,7 @@ class SoundPlayed(Schema):
     message = String()
 
 
-@app.route('/')
-def hello_world():
-    return "Hello World"
-
-
-@app.post('/test-sound')
+@test.post('/test')
 @input(PlaySound)
 @output(SoundPlayed)
 def test_sound(data):

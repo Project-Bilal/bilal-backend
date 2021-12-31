@@ -1,5 +1,5 @@
-from flask import Flask
+from bilal_backend.routes import add_routes
 from apiflask import APIFlask
-app = APIFlask(__name__)
-import bilal_backend.views
 
+app = APIFlask(__name__, docs_path='/')
+add_routes(app)
