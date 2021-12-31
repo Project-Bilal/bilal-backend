@@ -1,19 +1,9 @@
-from apiflask import APIBlueprint, Schema, input, output, abort
-from apiflask.fields import Integer, String
-from apiflask.validators import Length, OneOf
+from apiflask import APIBlueprint, input, output
 import pychromecast
+from bilal_backend.spec.schemas import SoundPlayed, PlaySound
 
 test = APIBlueprint(import_name="Test Sound", name="Test Sound", tag="Test Sound",
                     url_prefix='/test')
-
-
-class PlaySound(Schema):
-    audio_id = String(required=True)
-    speaker_name = String(required=True)
-
-
-class SoundPlayed(Schema):
-    message = String()
 
 
 @test.post('/')

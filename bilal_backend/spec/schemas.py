@@ -20,3 +20,12 @@ class SpeakerSchema(Schema):
 
 class VolumeSchema(Schema):
     volume = fields.Integer()
+
+
+class PlaySound(Schema):
+    audio_id = fields.String(required=True)
+    speaker_name = fields.String(required=True)
+
+
+class SoundPlayed(Schema):
+    message = fields.String()
