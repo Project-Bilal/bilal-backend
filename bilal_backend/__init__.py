@@ -1,4 +1,5 @@
 from flask import Flask
-app = Flask(__name__)
-
+from apiflask import APIFlask
+app = APIFlask(__name__)
 import bilal_backend.views
+

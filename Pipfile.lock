@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "76af42f8880b5c2c7020cb797678e24964326600960b6ea268cea4c8e1f83593"
+            "sha256": "35185a1883ba3b04dde96fc5f3e253d8bc11f31ceeb3f4bf12bf4e82a30a3ba8"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -21,7 +21,24 @@
                 "sha256:1d2b7ef82963909e93c4f24ce48d4de9e66009a21bf1c1e1c85bdd0812fe412f",
                 "sha256:72e3117667eedf66951bb2d93f4296a56b94b078a8a95905a052611fb3f1b973"
             ],
+            "markers": "python_version >= '3.5'",
             "version": "==9.0.1"
+        },
+        "apiflask": {
+            "hashes": [
+                "sha256:b3126999588844a0effa8a4f839a873a15a302f6d331c39eb3983085e98ee19d",
+                "sha256:b51c53be79fce52551dc5a384a9cc779ebe46719fcf11ee0cba79cb65ffa4c61"
+            ],
+            "index": "pypi",
+            "version": "==0.11.0"
+        },
+        "apispec": {
+            "hashes": [
+                "sha256:5bc5404b19259aeeb307ce9956e2c1a97722c6a130ef414671dfc21acd622afc",
+                "sha256:d167890e37f14f3f26b588ff2598af35faa5c27612264ea1125509c8ff860834"
+            ],
+            "markers": "python_version >= '3.6'",
+            "version": "==5.1.1"
         },
         "attrs": {
             "hashes": [
@@ -68,6 +85,20 @@
             ],
             "index": "pypi",
             "version": "==2.0.2"
+        },
+        "flask-httpauth": {
+            "hashes": [
+                "sha256:395040fda2854df800d15e84bc4a81a5f32f1d4a5e91eee554936f36f330aa29",
+                "sha256:e16067ba3378ea366edf8de4b9d55f38c0a0cbddefcc0f777a54b3fce1d99392"
+            ],
+            "version": "==4.5.0"
+        },
+        "flask-marshmallow": {
+            "hashes": [
+                "sha256:2adcd782b5a4a6c5ae3c96701f320d8ca6997995a52b2661093c56cc3ed24754",
+                "sha256:bd01a6372cbe50e36f205cfff0fc5dab0b7b662c4c8b2c4fc06a3151b2950950"
+            ],
+            "version": "==0.14.0"
         },
         "flask-restplus": {
             "hashes": [
@@ -191,6 +222,14 @@
             "markers": "python_version >= '3.6'",
             "version": "==2.0.1"
         },
+        "marshmallow": {
+            "hashes": [
+                "sha256:04438610bc6dadbdddb22a4a55bcc7f6f8099e69580b2e67f5a681933a1f4400",
+                "sha256:4c05c1684e0e97fe779c62b91878f173b937fe097b356cd82f793464f5bc6138"
+            ],
+            "markers": "python_version >= '3.6'",
+            "version": "==3.14.1"
+        },
         "protobuf": {
             "hashes": [
                 "sha256:038daf4fa38a7e818dd61f51f22588d61755160a98db087a046f80d66b855942",
@@ -286,6 +325,14 @@
             ],
             "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4' and python_version < '4'",
             "version": "==1.26.7"
+        },
+        "webargs": {
+            "hashes": [
+                "sha256:bb3530b0d37cdc5a5e29d30034dde4351811b9bc345eef21eb070a3ea7562093",
+                "sha256:bcce022250ee97cfbb0ad07b02388ac90a226ef4b479ec84317152345a565614"
+            ],
+            "markers": "python_version >= '3.6'",
+            "version": "==8.0.1"
         },
         "werkzeug": {
             "hashes": [
