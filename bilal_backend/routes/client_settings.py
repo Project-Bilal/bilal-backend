@@ -1,81 +1,85 @@
-from bilal_backend.libs import settings
+from apiflask import APIBlueprint, Schema, input, output, abort, fields
+from flask.views import MethodView
+from bilal_backend.libs import settings_handler as handler
+from bilal_backend.spec.schemas import LocationSchema, CalculationSchema, AthanSchema, SpeakerSchema, VolumeSchema
 
-from apiflask import APIBlueprint
-
-user_settings = APIBlueprint(import_name="User Settings", name="User Settings", tag="User Settings",
-                                         url_prefix='/settings')
-
-
-@user_settings.get('/user-location')
-def get_user_location():
-    return settings.get_user_location()
+settings = APIBlueprint(import_name="User Settings",
+                        name="User Settings",
+                        tag="User Settings",
+                        url_prefix='/settings')
 
 
-@user_settings.put('/user-location')
-def set_user_location(lat: float, long: float):
-    location = {
-        'lat': lat,
-        'long': long,
-    }
-    settings.set_user_location(location)
-    return True
+@settings.route('/location')
+class Location(MethodView):
+    def get(self):
+        handler.get_user_location()
+
+    @input(LocationSchema)
+    def put(self, data):
+        location = {
+            'lat': data.get('lat'),
+            'long': data.get('long'),
+        }
+        handler.set_user_location(location)
+        return 'success'
 
 
-@user_settings.get('/user-calc')
-def get_user_calculation():
-    return settings.get_user_calculation()
+@settings.route('/calc')
+class Calculation(MethodView):
+    def get(self):
+        return handler.get_user_calculation()
+
+    @input(CalculationSchema)
+    def put(self, calc: str):
+        handler.set_user_calculation(calc)
+        return 'success'
 
 
-@user_settings.put('/user-calc')
-def set_user_calculation(calc: str):
-    settings.set_user_calculation(calc)
-    return True
+@settings.route('/speaker')
+class Speaker(MethodView):
+    def get(self):
+        return handler.get_speaker_name()
+
+    @input(SpeakerSchema)
+    def put(self, name: str):
+        handler.set_speaker_name(name)
+        return 'success'
 
 
-@user_settings.get('/speaker')
-def get_speaker():
-    return settings.get_speaker_name()
+@settings.route('/volume')
+class Volume(MethodView):
+    def get(self):
+        return handler.get_speaker_volume()
+
+    @input(VolumeSchema)
+    def put(self, volume: int):
+        handler.set_speaker_volume(volume)
+        return 'success'
 
 
-@user_settings.put('/speaker')
-def set_speaker(name: str):
-    settings.set_speaker_name(name)
-    return True
+@settings.route('/athan')
+class Athan(MethodView):
+    def get(self):
+        return handler.get_user_athan()
+
+    @input(AthanSchema)
+    def put(self, data):
+        handler.set_user_athan(data.get('athan'))
+        return 'success'
 
 
-@user_settings.get('/volume')
-def get_volume():
-    return settings.get_speaker_volume()
+@settings.route('/fajir-athan')
+class FajirAthan(MethodView):
+    def get(self):
+        handler.get_user_fajir_athan()
+
+    @input(AthanSchema)
+    def put(self, data):
+        handler.set_user_fajir_athan(data.get('athan'))
+        return 'success'
 
 
-@user_settings.put('/volume')
-def set_volume(volume: int):
-    settings.set_speaker_volume(volume)
-    return True
-
-
-@user_settings.get('/athan')
-def get_athan():
-    return settings.get_user_athan()
-
-
-@user_settings.put('/athan')
-def set_athan(athan: str):
-    settings.set_user_athan(athan)
-    return True
-
-
-@user_settings.get('/fajir-athan')
-def get_fajir_athan():
-    settings.get_user_fajir_athan()
-
-
-@user_settings.put('/fajir-athan')
-def set_fajir_athan(athan: str):
-    settings.set_user_fajir_athan(athan)
-
-
-@user_settings.delete('/reset')
+@settings.delete('/reset')
 def reset():
-    settings.reset()
-    return True
+    handler.reset()
+    return 'success'

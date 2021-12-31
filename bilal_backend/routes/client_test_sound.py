@@ -16,7 +16,7 @@ class SoundPlayed(Schema):
     message = String()
 
 
-@test.post('/test')
+@test.post('/')
 @input(PlaySound)
 @output(SoundPlayed)
 def test_sound(data):
