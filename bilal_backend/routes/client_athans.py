@@ -4,6 +4,5 @@ athans = APIBlueprint(import_name="Athans", name="Athans", tag="Athan", url_pref
 
 
 @athans.get('/')
-@output
 async def get_athans():
     pass

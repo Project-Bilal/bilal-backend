@@ -4,24 +4,31 @@ from apiflask import Schema, fields, validators
 class LocationSchema(Schema):
     lat = fields.String()
     long = fields.String()
+    tz = fields.String()
 
 
 class CalculationSchema(Schema):
     calculation = fields.String(
-        validate=validators.OneOf(["MWL", "ISNA", "Egypt", "Makkah", "Karachi", "Tehran", "Jafari"])
+        required=True,
+        validate=validators.OneOf(["MWL", "ISNA", "Egypt", "Makkah", "Karachi", "Tehran", "Jafari"]),
+        metadata={'description': 'The calculation method used for deriving the prayer times.'}
     )
 
 
 class AthanSchema(Schema):
-    athan = fields.String()
+    athan = fields.String(required=True,
+                          metadata={'description': 'id of the athan to be played on the speaker'})
 
 
 class SpeakerSchema(Schema):
-    name = fields.String()
+    name = fields.String(required=True,
+                         metadata={'description': 'name of the speaker to be used for prayer calls'})
 
 
 class VolumeSchema(Schema):
-    volume = fields.Integer()
+    volume = fields.Integer(required=True,
+                            validate=validators.Range(min=0, max=100),
+                            metadata={'description': 'Volume of the speaker to be used for prayer calls'})
 
 
 class PlaySound(Schema):

@@ -1,4 +1,4 @@
-from apiflask import APIBlueprint, input, abort
+from apiflask import APIBlueprint, input, abort, doc
 from flask.views import MethodView
 from bilal_backend.libs import settings_handler as handler
 from bilal_backend.spec.schemas import LocationSchema, CalculationSchema, AthanSchema, SpeakerSchema, VolumeSchema
@@ -10,6 +10,7 @@ settings = APIBlueprint(import_name="User Settings",
 
 
 @settings.route('/location')
+@doc("some extra information")
 class Location(MethodView):
     def get(self):
         handler.get_user_location()
@@ -19,6 +20,7 @@ class Location(MethodView):
         location = {
             'lat': data.get('lat'),
             'long': data.get('long'),
+            'tz': data.get('tz')
         }
         handler.set_user_location(location)
         return 'success'
