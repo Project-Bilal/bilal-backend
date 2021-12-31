@@ -23,6 +23,12 @@ class AthanSchema(Schema):
 class SpeakerSchema(Schema):
     name = fields.String(required=True,
                          metadata={'description': 'name of the speaker to be used for prayer calls'})
+    model = fields.String(required=True,
+                         metadata={'description': 'model name of the speaker'})
+
+
+class SpeakersSchema(Schema):
+    speakers = fields.List(fields.Nested(SpeakerSchema, required=True))
 
 
 class VolumeSchema(Schema):
