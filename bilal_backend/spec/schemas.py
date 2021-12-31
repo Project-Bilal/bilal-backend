@@ -1,13 +1,15 @@
-from apiflask import Schema, fields
+from apiflask import Schema, fields, validators
 
 
 class LocationSchema(Schema):
-    lat = fields.Integer()
-    long = fields.Integer()
+    lat = fields.String()
+    long = fields.String()
 
 
 class CalculationSchema(Schema):
-    calculation = fields.String()
+    calculation = fields.String(
+        validate=validators.OneOf(["MWL", "ISNA", "Egypt", "Makkah", "Karachi", "Tehran", "Jafari"])
+    )
 
 
 class AthanSchema(Schema):
@@ -29,3 +31,15 @@ class PlaySound(Schema):
 
 class SoundPlayed(Schema):
     message = fields.String()
+
+
+class PrayerTimesSchemas(Schema):
+    asr = fields.String()
+    dhuhr = fields.String()
+    fajr = fields.String()
+    imsak = fields.String()
+    isha = fields.String()
+    maghrib = fields.String()
+    midnight = fields.String()
+    sunrise = fields.String()
+    sunset = fields.String()

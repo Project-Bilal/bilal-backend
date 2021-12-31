@@ -1,4 +1,4 @@
-from apiflask import APIBlueprint, Schema, input, output, abort, fields
+from apiflask import APIBlueprint, input, abort
 from flask.views import MethodView
 from bilal_backend.libs import settings_handler as handler
 from bilal_backend.spec.schemas import LocationSchema, CalculationSchema, AthanSchema, SpeakerSchema, VolumeSchema
@@ -30,8 +30,8 @@ class Calculation(MethodView):
         return handler.get_user_calculation()
 
     @input(CalculationSchema)
-    def put(self, calc: str):
-        handler.set_user_calculation(calc)
+    def put(self, data):
+        handler.set_user_calculation(data.get('calculation'))
         return 'success'
 
 
@@ -41,8 +41,8 @@ class Speaker(MethodView):
         return handler.get_speaker_name()
 
     @input(SpeakerSchema)
-    def put(self, name: str):
-        handler.set_speaker_name(name)
+    def put(self, data):
+        handler.set_speaker_name(data.get('name'))
         return 'success'
 
 
