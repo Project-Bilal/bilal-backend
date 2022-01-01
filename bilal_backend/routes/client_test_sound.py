@@ -6,6 +6,7 @@ from bilal_backend.spec.schemas import SoundPlayed, PlaySound
 test = APIBlueprint(import_name="Test Sound", name="Test Sound", tag="Test Sound",
                     url_prefix='/test')
 
+
 @test.post('/')
 @input(PlaySound)
 @output(SoundPlayed)

@@ -21,4 +21,4 @@ class Volume(MethodView):
     @output(VolumeSchema)
     def get(self, name: str):
         vol = get_volume(name)
-        return {"volume" : vol}
+        return {"volume": vol}

@@ -2,9 +2,8 @@ from apiflask import Schema, fields, validators
 
 
 class LocationSchema(Schema):
-    lat = fields.String()
-    long = fields.String()
-    tz = fields.String()
+    lat = fields.Float()
+    long = fields.Float()
 
 
 class CalculationSchema(Schema):

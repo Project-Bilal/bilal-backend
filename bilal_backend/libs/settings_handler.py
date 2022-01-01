@@ -1,5 +1,7 @@
 from lightdb import LightDB
 from bilal_backend.libs.constants import DATA_FILE
+from bilal_backend.libs.utils import get_tz
+
 
 '''
 {
@@ -37,8 +39,14 @@ def get_user_location():
     return data.get('location')
 
 
-def set_user_location(location):
+def set_user_location(lat, long):
     data = LightDB(DATA_FILE)
+    tz = get_tz(lat, long)
+    location = {
+        'lat': lat,
+        'long': long,
+        'tz': tz
+    }
     data.set('location', location)
     # TODO run cron jobs script
 
