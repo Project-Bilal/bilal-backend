@@ -25,6 +25,10 @@ class SpeakerSchema(Schema):
                          metadata={'description': 'name of the speaker to be used for prayer calls'})
     model = fields.String(required=True,
                          metadata={'description': 'model name of the speaker'})
+    cast_type = fields.String(required=True,
+                         metadata={'description': 'Group of devices or single device'})
+    cast_info = fields.String(required=True,
+                         metadata={'description': 'cast_info from device'})
 
 
 class SpeakersSchema(Schema):
@@ -33,7 +37,7 @@ class SpeakersSchema(Schema):
 
 class VolumeSchema(Schema):
     volume = fields.Integer(required=True,
-                            validate=validators.Range(min=0, max=100),
+                            validate=validators.Range(min=0, max=10),
                             metadata={'description': 'Volume of the speaker to be used for prayer calls'})
 
 

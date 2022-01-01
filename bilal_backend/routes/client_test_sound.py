@@ -1,4 +1,5 @@
 from apiflask import APIBlueprint, input, output
+from bilal_backend.libs.constants import GDRIVE_URL
 import pychromecast
 from bilal_backend.spec.schemas import SoundPlayed, PlaySound
 
@@ -15,5 +16,5 @@ def test_sound(data):
     cast = chromecasts[0]
     cast.wait()
     mc = cast.media_controller
-    mc.play_media(f'https://drive.google.com/uc?export=download&id={audio_id}', 'audio/mp3')
+    mc.play_media(GDRIVE_URL + audio_id, 'audio/mp3')
     return "Sound is played"
