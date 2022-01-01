@@ -12,6 +12,13 @@ settings = APIBlueprint(import_name="User Settings",
 @settings.route('/location')
 @doc("some extra information")
 class Location(MethodView):
+    @doc(responses=[200, 412])
+    def get(self):
+        resp = handler.get_user_location()
+        if not resp:
+            abort(status_code=412, message="No Location saved")
+        return resp
+
     @input(LocationSchema)
     @doc(responses=[200])
     def put(self, data):
@@ -19,13 +26,6 @@ class Location(MethodView):
         long = data.get('long')
         handler.set_user_location(lat, long)
         return 'success'
-
-    @doc(responses=[200, 412])
-    def get(self):
-        resp = handler.get_user_location()
-        if not resp:
-            abort(status_code=412, message="No Location saved")
-        return resp
 
 
 @settings.route('/calc')
