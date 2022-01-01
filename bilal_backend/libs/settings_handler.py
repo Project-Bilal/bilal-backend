@@ -2,7 +2,6 @@ from lightdb import LightDB
 from bilal_backend.libs.constants import DATA_FILE
 from bilal_backend.libs.utils import get_tz
 
-
 '''
 {
     'location': {'long': int,
@@ -39,10 +38,11 @@ def get_user_location():
     return data.get('location')
 
 
-def set_user_location(lat, long):
+def set_user_location(lat, long, address):
     data = LightDB(DATA_FILE)
     tz = get_tz(lat, long)
     location = {
+        'address': address,
         'lat': lat,
         'long': long,
         'tz': tz

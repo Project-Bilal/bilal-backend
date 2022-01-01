@@ -11,6 +11,3 @@ def get_tz(lat, long):
     dt = datetime.now(pytz.timezone(tz_str))
     # total seconds offset / minutes / hours to give total hours offset
     return dt.utcoffset().total_seconds() / 60 / 60
-
-
-get_tz(47.77321930000001, -122.2270053)

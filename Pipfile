@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 pychromecast = "*"
 apiflask = "*"
+flask-cors = "*"
 lightdb = "*"
 tzwhere = "*"
 pytz = "*"

@@ -4,6 +4,7 @@ from apiflask import Schema, fields, validators
 class LocationSchema(Schema):
     lat = fields.Float()
     long = fields.Float()
+    address = fields.String()
 
 
 class CalculationSchema(Schema):
@@ -23,15 +24,15 @@ class SpeakerSchema(Schema):
     name = fields.String(required=True,
                          metadata={'description': 'name of the speaker to be used for prayer calls'})
     ip = fields.String(required=True,
-                         metadata={'description': 'ip address of the speaker'})
+                       metadata={'description': 'ip address of the speaker'})
     port = fields.Integer(required=True,
-                         metadata={'description': 'port of the speaker'})
+                          metadata={'description': 'port of the speaker'})
     uuid = fields.String(required=True,
                          metadata={'description': 'uuid string of the speaker'})
     model = fields.String(required=True,
-                         metadata={'description': 'model name of the speaker'})
+                          metadata={'description': 'model name of the speaker'})
     cast_type = fields.String(required=True,
-                         metadata={'description': 'Group of devices or single device'})
+                              metadata={'description': 'Group of devices or single device'})
 
 
 class SpeakersSchema(Schema):

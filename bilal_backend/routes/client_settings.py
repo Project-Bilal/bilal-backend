@@ -24,7 +24,8 @@ class Location(MethodView):
     def put(self, data):
         lat = data.get('lat')
         long = data.get('long')
-        handler.set_user_location(lat, long)
+        address = data.get('address')
+        handler.set_user_location(lat, long, address)
         return 'success'
 
 
@@ -82,7 +83,7 @@ class Athan(MethodView):
     def get(self):
         resp = handler.get_user_athan()
         if not resp:
-            abort(status_code=412, message="No athan selected")
+            abort(status_code=412, message="No athan saved")
         return resp
 
     @input(AthanSchema)
@@ -98,7 +99,7 @@ class FajirAthan(MethodView):
     def get(self):
         resp = handler.get_user_fajir_athan()
         if not resp:
-            abort(status_code=412, message="No fajir athan selected")
+            abort(status_code=412, message="No fajir athan saved")
         return resp
 
     @doc(responses=[200])
