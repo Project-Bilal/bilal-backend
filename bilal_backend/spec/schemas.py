@@ -22,12 +22,16 @@ class AthanSchema(Schema):
 class SpeakerSchema(Schema):
     name = fields.String(required=True,
                          metadata={'description': 'name of the speaker to be used for prayer calls'})
+    ip = fields.String(required=True,
+                         metadata={'description': 'ip address of the speaker'})
+    port = fields.Integer(required=True,
+                         metadata={'description': 'port of the speaker'})
+    uuid = fields.String(required=True,
+                         metadata={'description': 'uuid string of the speaker'})
     model = fields.String(required=True,
                          metadata={'description': 'model name of the speaker'})
     cast_type = fields.String(required=True,
                          metadata={'description': 'Group of devices or single device'})
-    cast_info = fields.String(required=True,
-                         metadata={'description': 'cast_info from device'})
 
 
 class SpeakersSchema(Schema):
@@ -40,12 +44,11 @@ class VolumeSchema(Schema):
                             metadata={'description': 'Volume of the speaker to be used for prayer calls'})
 
 
-class PlaySound(Schema):
+class PlaySchema(Schema):
     audio_id = fields.String(required=True)
-    speaker_name = fields.String(required=True)
 
 
-class SoundPlayed(Schema):
+class PlayedSchema(Schema):
     message = fields.String()
 
 
