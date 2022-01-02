@@ -1,2 +1,3 @@
 from bilal_backend import app
-app.run(debug=True)
+
+app.run(debug=False, host="0.0.0.0", port=5002)

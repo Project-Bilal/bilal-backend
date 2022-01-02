@@ -49,7 +49,7 @@ class Calculation(MethodView):
 class Speaker(MethodView):
     @doc(responses=[200, 412])
     def get(self):
-        resp = handler.get_speaker_name()
+        resp = handler.get_speaker()
         if not resp:
             abort(status_code=412, message="No calculation method saved")
         return resp
@@ -57,7 +57,7 @@ class Speaker(MethodView):
     @input(SpeakerSchema)
     @doc(responses=[200])
     def put(self, data):
-        handler.set_speaker_name(data.get('name'))
+        handler.set_speaker(data)
         return 'success'
 
 

@@ -16,6 +16,7 @@ class Speakers(MethodView):
     def get(self):
         return get_speakers()
 
+
 ''' Work in Progress
 @speakers.route('/speaker')
 class Speaker(MethodView):
@@ -28,12 +29,14 @@ class Speaker(MethodView):
         return resp
 '''
 
+
 @speakers.route('/play')
 class PlaySound(MethodView):
     @input(PlaySchema)
     @output(PlayedSchema)
     def post(self, data):
         return play_sound(data['audio_id'])
+
 
 @speakers.route('/test')
 class TestSound(MethodView):
