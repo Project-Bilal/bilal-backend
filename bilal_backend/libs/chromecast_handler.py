@@ -1,9 +1,8 @@
 from pychromecast import zeroconf, threading, CastBrowser, SimpleCastListener, get_chromecast_from_host
 from zeroconf import Zeroconf
 from uuid import UUID
-from bilal_backend.libs.constants import DISCOVER_TIMEOUT, DATA_FILE, GDRIVE_URL
+from bilal_backend.libs.constants import DISCOVER_TIMEOUT, DATA_FILE, GDRIVE_URL, TRIES
 from lightdb import LightDB
-
 
 # Uses the discover function to return a list of dictionaries for the available speakers
 def get_speakers():
@@ -19,6 +18,14 @@ def get_speakers():
             "cast_type" : "Group" if device.cast_type else "Audio",
         })
     return {"speakers": speakers}
+
+'''Work in progress
+def get_speaker():
+    device = get_chromecast()
+    device.wait()
+    resp = "connected" if device.socket_client.is_connected else "disconnected"
+    return resp
+'''
 
 # play on the default speaker given an audio_id
 def play_sound(audio_id):
@@ -49,8 +56,7 @@ def get_chromecast(speaker=None):
         data['model'],
         data['name'],
     )
-    return get_chromecast_from_host(host)
-
+    return get_chromecast_from_host(host, tries=TRIES)
 
 # discovers all the devices on the network
 def discover_devices(max_devices=None, timeout=DISCOVER_TIMEOUT):
