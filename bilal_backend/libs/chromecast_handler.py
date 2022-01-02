@@ -31,15 +31,23 @@ def play_sound(audio_id):
     mc.play_media(GDRIVE_URL + audio_id, 'audio/mp3')
     return {"message": "Sound is played."}
 
-# return Chromecast object based on hos info in db
-def get_chromecast():
-    data = LightDB(DATA_FILE)
+# test a sound on a speaker, dosen't set volume
+def test_sound(data):
+    device = get_chromecast(data['speaker'])
+    device.wait()
+    mc = device.media_controller
+    mc.play_media(GDRIVE_URL + data['audio_id'], 'audio/mp3')
+    return {"message": "Sound is played."}
+
+# return Chromecast object based on host info in db or passed SpeakerSchema
+def get_chromecast(speaker=None):
+    data = LightDB(DATA_FILE).get('speaker') if not speaker else speaker
     host = (
-        data.get('speaker')['ip'],
-        data.get('speaker')['port'],
-        UUID(data.get('speaker')['uuid']),
-        data.get('speaker')['model'],
-        data.get('speaker')['name'],
+        data['ip'],
+        data['port'],
+        UUID(data['uuid']),
+        data['model'],
+        data['name'],
     )
     return get_chromecast_from_host(host)
 

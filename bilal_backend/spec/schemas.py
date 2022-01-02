@@ -31,7 +31,7 @@ class SpeakerSchema(Schema):
                          metadata={'description': 'uuid string of the speaker'})
     model = fields.String(required=True,
                           metadata={'description': 'model name of the speaker'})
-    cast_type = fields.String(required=True,
+    cast_type = fields.String(required=False,
                               metadata={'description': 'Group of devices or single device'})
 
 
@@ -48,6 +48,9 @@ class VolumeSchema(Schema):
 class PlaySchema(Schema):
     audio_id = fields.String(required=True)
 
+class TestSoundSchema(Schema):
+    audio_id = fields.String(required=True)
+    speaker = fields.Nested(SpeakerSchema, required=True)
 
 class PlayedSchema(Schema):
     message = fields.String()
