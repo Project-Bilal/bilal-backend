@@ -65,7 +65,7 @@ class Speaker(MethodView):
 class Volume(MethodView):
     @doc(responses=[200, 412])
     def get(self):
-        resp = handler.get_speaker_volume()
+        resp = handler.get_volume()
         if not resp:
             abort(status_code=412, message="No volume level saved")
         return resp
@@ -73,7 +73,7 @@ class Volume(MethodView):
     @input(VolumeSchema)
     @doc(responses=[200])
     def put(self, volume: int):
-        handler.set_speaker_volume(volume)
+        handler.set_volume(volume)
         return 'success'
 
 
