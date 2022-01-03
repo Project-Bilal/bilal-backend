@@ -1,6 +1,6 @@
 from datetime import date
 
-from bilal_backend.libs.prayer_times import PrayTimes
+from bilal_backend.utils.prayer_times import PrayTimes
 
 
 def prayer_times_handler(lat=None, long=None, tz=None, calc=None):

@@ -1,6 +1,17 @@
 from apiflask import Schema, fields, validators
 
 
+class AthanSchema(Schema):
+    name = fields.String(metadata={'description': 'Name of audio file to display to user'})
+    length = fields.String(metadata={'description': 'Length of audio file'})
+    id = fields.String(metadata={'description': 'ID of audio file to be passed back to settings'})
+    type = fields.String(metadata={'description': 'type: fajr, tabir, notifications or dua'})
+
+
+class AthansSchema(Schema):
+    audio_id = fields.Dict(fields.Nested(AthanSchema))
+
+
 class LocationSchema(Schema):
     lat = fields.Float()
     long = fields.Float()
@@ -15,9 +26,15 @@ class CalculationSchema(Schema):
     )
 
 
-class AthanSchema(Schema):
+class AthanSettingsSchema(Schema):
     athan = fields.String(required=True,
                           metadata={'description': 'id of the athan to be played on the speaker'})
+
+
+class VolumeSchema(Schema):
+    volume = fields.Integer(required=True,
+                            validate=validators.Range(min=0, max=10),
+                            metadata={'description': 'Volume of the speaker to be used for prayer calls'})
 
 
 class SpeakerSchema(Schema):
@@ -39,18 +56,14 @@ class SpeakersSchema(Schema):
     speakers = fields.List(fields.Nested(SpeakerSchema, required=True))
 
 
-class VolumeSchema(Schema):
-    volume = fields.Integer(required=True,
-                            validate=validators.Range(min=0, max=10),
-                            metadata={'description': 'Volume of the speaker to be used for prayer calls'})
-
-
 class PlaySchema(Schema):
     audio_id = fields.String(required=True)
+
 
 class TestSoundSchema(Schema):
     audio_id = fields.String(required=True)
     speaker = fields.Nested(SpeakerSchema, required=True)
+
 
 class PlayedSchema(Schema):
     message = fields.String()

@@ -1,7 +1,7 @@
 from apiflask import APIBlueprint, input, abort, doc
 from flask.views import MethodView
 from bilal_backend.libs import settings_handler as handler
-from bilal_backend.spec.schemas import LocationSchema, CalculationSchema, AthanSchema, SpeakerSchema, VolumeSchema
+from bilal_backend.spec.schemas import LocationSchema, CalculationSchema, AthanSettingsSchema, SpeakerSchema, VolumeSchema
 
 settings = APIBlueprint(import_name="User Settings",
                         name="User Settings",
@@ -86,7 +86,7 @@ class Athan(MethodView):
             abort(status_code=412, message="No athan saved")
         return resp
 
-    @input(AthanSchema)
+    @input(AthanSettingsSchema)
     @doc(responses=[200])
     def put(self, data):
         handler.set_user_athan(data.get('athan'))
@@ -103,7 +103,7 @@ class FajirAthan(MethodView):
         return resp
 
     @doc(responses=[200])
-    @input(AthanSchema)
+    @input(AthanSettingsSchema)
     def put(self, data):
         handler.set_user_fajir_athan(data.get('athan'))
         return 'success'

@@ -1,8 +1,8 @@
-from pychromecast import zeroconf, threading, CastBrowser, SimpleCastListener, get_chromecast_from_host
+from pychromecast import threading, CastBrowser, SimpleCastListener, get_chromecast_from_host
 from zeroconf import Zeroconf
 from uuid import UUID
 from bilal_backend.libs.constants import DISCOVER_TIMEOUT, GDRIVE_URL, TRIES
-from bilal_backend.libs.utils import db_context
+from bilal_backend.utils.utils import db_context
 
 
 # Uses the discover function to return a list of dictionaries for the available speakers

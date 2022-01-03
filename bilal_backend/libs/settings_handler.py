@@ -1,34 +1,4 @@
-from bilal_backend.libs.utils import get_tz, db_context
-
-'''
-{
-    'location': {'long': int,
-                 'lat': int,
-                 },
-    'calculation': str,
-    'athan_default': str,
-    'athan_fajir': str,
-    'athan_delay': int,
-    'speaker_name': str,
-    'speaker_volume': float,
-
-}
-'''
-
-ATHANS = {
-    'id': {
-        'name': str,
-        'id': str,
-        'length': str,
-    }
-}
-FAJIR_ATHANS = {
-    'id': {
-        'name': str,
-        'id': str,
-        'length': str,
-    }
-}
+from bilal_backend.utils.utils import get_tz, db_context
 
 
 @db_context
