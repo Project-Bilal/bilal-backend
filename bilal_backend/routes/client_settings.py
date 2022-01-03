@@ -1,7 +1,8 @@
 from apiflask import APIBlueprint, input, abort, doc
 from flask.views import MethodView
 from bilal_backend.libs import settings_handler as handler
-from bilal_backend.spec.schemas import LocationSchema, CalculationSchema, AthanSettingsSchema, SpeakerSchema, VolumeSchema
+from bilal_backend.spec.schemas import LocationSchema, CalculationSchema, AudioSchema, SpeakerSchema, \
+    VolumeSchema
 
 settings = APIBlueprint(import_name="User Settings",
                         name="User Settings",
@@ -10,7 +11,6 @@ settings = APIBlueprint(import_name="User Settings",
 
 
 @settings.route('/location')
-@doc("some extra information")
 class Location(MethodView):
     @doc(responses=[200, 412])
     def get(self):
@@ -74,38 +74,6 @@ class Volume(MethodView):
     @doc(responses=[200])
     def put(self, volume: int):
         handler.set_speaker_volume(volume)
-        return 'success'
-
-
-@settings.route('/athan')
-class Athan(MethodView):
-    @doc(responses=[200, 412])
-    def get(self):
-        resp = handler.get_user_athan()
-        if not resp:
-            abort(status_code=412, message="No athan saved")
-        return resp
-
-    @input(AthanSettingsSchema)
-    @doc(responses=[200])
-    def put(self, data):
-        handler.set_user_athan(data.get('athan'))
-        return 'success'
-
-
-@settings.route('/fajir-athan')
-class FajirAthan(MethodView):
-    @doc(responses=[200, 412])
-    def get(self):
-        resp = handler.get_user_fajir_athan()
-        if not resp:
-            abort(status_code=412, message="No fajir athan saved")
-        return resp
-
-    @doc(responses=[200])
-    @input(AthanSettingsSchema)
-    def put(self, data):
-        handler.set_user_fajir_athan(data.get('athan'))
         return 'success'
 
 

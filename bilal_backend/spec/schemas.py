@@ -26,9 +26,9 @@ class CalculationSchema(Schema):
     )
 
 
-class AthanSettingsSchema(Schema):
-    athan = fields.String(required=True,
-                          metadata={'description': 'id of the athan to be played on the speaker'})
+class AudioSchema(Schema):
+    audio_id = fields.String(required=True,
+                             metadata={'description': 'id of the athan to be played on the speaker'})
 
 
 class VolumeSchema(Schema):
