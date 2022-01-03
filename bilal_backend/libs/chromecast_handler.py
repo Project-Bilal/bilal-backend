@@ -21,15 +21,6 @@ def get_speakers():
     return {"speakers": speakers}
 
 
-'''Work in progress
-def get_speaker():
-    device = get_chromecast()
-    device.wait()
-    resp = "connected" if device.socket_client.is_connected else "disconnected"
-    return resp
-'''
-
-
 # play on the default speaker given an audio_id
 @db_context
 def play_sound(data, audio_id):
