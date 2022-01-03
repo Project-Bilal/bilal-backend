@@ -1,8 +1,7 @@
 from apiflask import APIBlueprint, output, input, abort, doc
 from flask.views import MethodView
 from bilal_backend.libs.chromecast_handler import get_speakers, play_sound, test_sound
-from bilal_backend.scrap import get_chromecast
-from bilal_backend.spec.schemas import SpeakersSchema, PlayedSchema, PlaySchema, TestSoundSchema, SpeakerSchema
+from bilal_backend.spec.schemas import SpeakersSchema, PlayedSchema, PlaySchema, TestSoundSchema
 
 speakers = APIBlueprint(import_name="Speaker",
                         name="Speakers",
