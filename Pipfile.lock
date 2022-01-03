@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "7569fc2ddc9e69ae1b287337e0c409df4d861e8175b1fb9017b8a4bf0a466156"
+            "sha256": "7133d1f9d030da7c648d20162621c88399f179e0f41a6521d85fd8943b324734"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -122,13 +122,6 @@
             ],
             "markers": "python_version >= '3.6'",
             "version": "==3.0.3"
-        },
-        "lightdb": {
-            "hashes": [
-                "sha256:4b3ad6e80f3bad988e648dd8b2a39f60edb2cd7880d22a5c55d8970018c3388a"
-            ],
-            "index": "pypi",
-            "version": "==1.1.2"
         },
         "markupsafe": {
             "hashes": [

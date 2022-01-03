@@ -1,6 +1,4 @@
-from lightdb import LightDB
-from bilal_backend.libs.constants import DATA_FILE
-from bilal_backend.libs.utils import get_tz
+from bilal_backend.libs.utils import get_tz, db_context
 
 '''
 {
@@ -33,13 +31,13 @@ FAJIR_ATHANS = {
 }
 
 
-def get_user_location():
-    data = LightDB(DATA_FILE)
+@db_context
+def get_user_location(data):
     return data.get('location')
 
 
-def set_user_location(lat, long, address):
-    data = LightDB(DATA_FILE)
+@db_context
+def set_user_location(data, lat, long, address):
     tz = get_tz(lat, long)
     location = {
         'address': address,
@@ -48,71 +46,72 @@ def set_user_location(lat, long, address):
         'tz': tz
     }
     data.set('location', location)
+
     # TODO run cron jobs script
 
 
-def get_user_calculation():
-    data = LightDB(DATA_FILE)
+@db_context
+def get_user_calculation(data):
     return data.get('calculation')
 
 
-def set_user_calculation(calculation):
-    data = LightDB(DATA_FILE)
+@db_context
+def set_user_calculation(data, calculation):
     data.set('calculation', calculation)
     # TODO run cron jobs script
 
 
-def get_user_athan():
-    data = LightDB(DATA_FILE)
+@db_context
+def get_user_athan(data):
     # TODO: Create dictionary for athans, and return athan details
     return data.get('athan_default')
 
 
-def set_user_athan(athan):
-    data = LightDB(DATA_FILE)
+@db_context
+def set_user_athan(data, athan):
     data.set('athan_default', athan)
 
 
-def get_user_fajir_athan():
-    data = LightDB(DATA_FILE)
+@db_context
+def get_user_fajir_athan(data):
     return data.get('athan_fajir')
 
 
-def set_user_fajir_athan(athan):
-    data = LightDB(DATA_FILE)
+@db_context
+def set_user_fajir_athan(data, athan):
     data.set('athan_fajir', athan)
 
 
-def get_user_athan_delay():
-    data = LightDB(DATA_FILE)
+@db_context
+def get_user_athan_delay(data):
     return data.get('athan_delay')
 
 
-def set_user_athan_delay(delay):
-    data = LightDB(DATA_FILE)
+@db_context
+def set_user_athan_delay(data, delay):
     data.set('athan_delay', delay)
 
 
-def get_speaker_name():
-    data = LightDB(DATA_FILE)
-    return data.get('speaker_name')
+@db_context
+def get_speaker(data):
+    return data.get('speaker')
 
 
-def set_speaker_name(name):
-    data = LightDB(DATA_FILE)
-    data.set('speaker_name', name)
+@db_context
+def set_speaker(data, speaker):
+    data.set('speaker', speaker)
 
 
-def get_speaker_volume():
-    data = LightDB(DATA_FILE)
+@db_context
+def get_speaker_volume(data):
     return data.get('speaker_volume')
 
 
-def set_speaker_volume(volume):
-    data = LightDB(DATA_FILE)
+@db_context
+def set_speaker_volume(data, volume):
     data.set('speaker_volume', volume)
 
 
-def reset():
-    data = LightDB(DATA_FILE)
+@db_context
+def reset(data):
     data.reset()

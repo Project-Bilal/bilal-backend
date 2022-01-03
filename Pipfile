@@ -7,7 +7,6 @@ name = "pypi"
 pychromecast = "*"
 apiflask = "*"
 flask-cors = "*"
-lightdb = "*"
 tzwhere = "*"
 pytz = "*"
 

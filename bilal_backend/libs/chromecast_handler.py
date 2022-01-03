@@ -1,8 +1,9 @@
 from pychromecast import zeroconf, threading, CastBrowser, SimpleCastListener, get_chromecast_from_host
 from zeroconf import Zeroconf
 from uuid import UUID
-from bilal_backend.libs.constants import DISCOVER_TIMEOUT, DATA_FILE, GDRIVE_URL, TRIES
-from lightdb import LightDB
+from bilal_backend.libs.constants import DISCOVER_TIMEOUT, GDRIVE_URL, TRIES
+from bilal_backend.libs.utils import db_context
+
 
 # Uses the discover function to return a list of dictionaries for the available speakers
 def get_speakers():
@@ -10,14 +11,15 @@ def get_speakers():
     speakers = []
     for device in devices:
         speakers.append({
-            "name" : device.friendly_name,
-            "ip" : device.host,
-            "port" : device.port,
-            "uuid" : str(device.uuid),
-            "model" : device.model_name,
-            "cast_type" : "Group" if device.cast_type else "Audio",
+            "name": device.friendly_name,
+            "ip": device.host,
+            "port": device.port,
+            "uuid": str(device.uuid),
+            "model": device.model_name,
+            "cast_type": "Group" if device.cast_type else "Audio",
         })
     return {"speakers": speakers}
+
 
 '''Work in progress
 def get_speaker():
@@ -27,16 +29,18 @@ def get_speaker():
     return resp
 '''
 
+
 # play on the default speaker given an audio_id
-def play_sound(audio_id):
-    data = LightDB(DATA_FILE)
-    vol = float(data.get("speaker")['volume'])/10
+@db_context
+def play_sound(data, audio_id):
+    vol = float(data.get("speaker")['volume']) / 10
     device = get_chromecast()
     device.wait()
     device.set_volume(vol)
     mc = device.media_controller
     mc.play_media(GDRIVE_URL + audio_id, 'audio/mp3')
     return {"message": "Sound is played."}
+
 
 # test a sound on a speaker, dosen't set volume
 def test_sound(data):
@@ -46,17 +50,20 @@ def test_sound(data):
     mc.play_media(GDRIVE_URL + data['audio_id'], 'audio/mp3')
     return {"message": "Sound is played."}
 
+
 # return Chromecast object based on host info in db or passed SpeakerSchema
-def get_chromecast(speaker=None):
-    data = LightDB(DATA_FILE).get('speaker') if not speaker else speaker
+@db_context
+def get_chromecast(data, speaker=None):
+    spkr = data.get('speaker') if not speaker else speaker
     host = (
-        data['ip'],
-        data['port'],
-        UUID(data['uuid']),
-        data['model'],
-        data['name'],
+        spkr['ip'],
+        spkr['port'],
+        UUID(spkr['uuid']),
+        spkr['model'],
+        spkr['name'],
     )
     return get_chromecast_from_host(host, tries=TRIES)
+
 
 # discovers all the devices on the network
 def discover_devices(max_devices=None, timeout=DISCOVER_TIMEOUT):
