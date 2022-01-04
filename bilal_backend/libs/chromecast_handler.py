@@ -24,7 +24,7 @@ def get_speakers():
 # play on the default speaker given an audio_id
 @db_context
 def play_sound(data, audio_id):
-    vol = float(data.get("speaker")['volume']) / 10
+    vol = float(data.get("speaker_volume")['volume']) / 10
     device = get_chromecast()
     device.wait()
     device.set_volume(vol)

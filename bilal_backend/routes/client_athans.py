@@ -92,5 +92,5 @@ class NotificationAthan(MethodView):
 
     @input(AudioSchema)
     def put(self, audio_id):
-        handlers.set_isha_athan(audio_id)
+        handlers.set_notification(audio_id)
         return 'success'
