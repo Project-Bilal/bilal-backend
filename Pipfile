@@ -9,6 +9,7 @@ apiflask = "*"
 flask-cors = "*"
 tzwhere = "*"
 pytz = "*"
+python-crontab = "*"
 
 [dev-packages]
 
