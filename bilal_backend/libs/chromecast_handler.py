@@ -37,7 +37,7 @@ def test_sound(data):
     device = get_chromecast(data['speaker'])
     device.wait()
     mc = device.media_controller
-    mc.play_media(GDRIVE_URL + data['audio_id'], 'audio/mp3', title="This is a test..", thumb=f'https://drive.google.com/uc?id={THUMB}')
+    mc.play_media(GDRIVE_URL + data['audio_id'], 'audio/mp3', title="This is a test from Project-Bilal..", thumb=f'https://drive.google.com/uc?id={THUMB}')
     return {"message": "Sound is played."}
 
 # return Chromecast object based on host info in db or passed SpeakerSchema
