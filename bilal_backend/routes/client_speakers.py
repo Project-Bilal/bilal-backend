@@ -8,12 +8,12 @@ speakers = APIBlueprint(import_name="Speaker",
                         tag="Speakers",
                         url_prefix='/speakers')
 
+
 @speakers.route('/')
 class Speakers(MethodView):
     @output(SpeakersSchema)
     def get(self):
         return get_speakers()
-
 
 
 @speakers.route('/play')

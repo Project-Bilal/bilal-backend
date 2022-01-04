@@ -32,17 +32,6 @@ def set_user_calculation(data, calculation):
 
 
 @db_context
-def get_user_athan(data):
-    # TODO: Create dictionary for athans, and return athan details
-    return data.get('athan_default')
-
-
-@db_context
-def set_user_athan(data, athan):
-    data.set('athan_default', athan)
-
-
-@db_context
 def get_user_fajir_athan(data):
     return data.get('athan_fajir')
 
@@ -73,12 +62,12 @@ def set_speaker(data, speaker):
 
 
 @db_context
-def get_speaker_volume(data):
+def get_volume(data):
     return data.get('speaker_volume')
 
 
 @db_context
-def set_speaker_volume(data, volume):
+def set_volume(data, volume):
     data.set('speaker_volume', volume)
 
 
