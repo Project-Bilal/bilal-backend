@@ -1,9 +1,8 @@
 from pychromecast import threading, CastBrowser, SimpleCastListener, get_chromecast_from_host
 from zeroconf import Zeroconf
 from uuid import UUID
-from bilal_backend.libs.constants import DISCOVER_TIMEOUT, GDRIVE_URL, TRIES
+from bilal_backend.libs.constants import DISCOVER_TIMEOUT, GDRIVE_URL, THUMB, DEFAULT_AUDIO_TITLE
 from bilal_backend.utils.utils import db_context
-
 
 # Uses the discover function to return a list of dictionaries for the available speakers
 def get_speakers():
@@ -20,32 +19,31 @@ def get_speakers():
         })
     return {"speakers": speakers}
 
-
 # play on the default speaker given an audio_id
 @db_context
-def play_sound(data, audio_id):
+def play_sound(data, audio_id, audio_title=DEFAULT_AUDIO_TITLE):
     vol = float(data.get("speaker")['volume']) / 10
     device = get_chromecast()
     device.wait()
     device.set_volume(vol)
     mc = device.media_controller
-    mc.play_media(GDRIVE_URL + audio_id, 'audio/mp3')
+    mc.play_media(GDRIVE_URL + audio_id, 'audio/mp3', title=audio_title, thumb=f'https://drive.google.com/uc?id={THUMB}')
     return {"message": "Sound is played."}
 
-
 # test a sound on a speaker, dosen't set volume
+@db_context
 def test_sound(data):
+    print(data['speaker'])
     device = get_chromecast(data['speaker'])
     device.wait()
     mc = device.media_controller
-    mc.play_media(GDRIVE_URL + data['audio_id'], 'audio/mp3')
+    mc.play_media(GDRIVE_URL + data['audio_id'], 'audio/mp3', title="This is a test..", thumb=f'https://drive.google.com/uc?id={THUMB}')
     return {"message": "Sound is played."}
-
 
 # return Chromecast object based on host info in db or passed SpeakerSchema
 @db_context
 def get_chromecast(data, speaker=None):
-    spkr = data.get('speaker') if not speaker else speaker
+    spkr = data['speaker'] if not speaker else speaker
     host = (
         spkr['ip'],
         spkr['port'],
@@ -53,8 +51,7 @@ def get_chromecast(data, speaker=None):
         spkr['model'],
         spkr['name'],
     )
-    return get_chromecast_from_host(host, tries=TRIES)
-
+    return get_chromecast_from_host(host)
 
 # discovers all the devices on the network
 def discover_devices(max_devices=None, timeout=DISCOVER_TIMEOUT):
@@ -70,5 +67,4 @@ def discover_devices(max_devices=None, timeout=DISCOVER_TIMEOUT):
 
     # Wait for the timeout or the maximum number of devices
     discover_complete.wait(timeout)
-
     return list(browser.devices.values())

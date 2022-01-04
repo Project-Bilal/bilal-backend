@@ -58,6 +58,7 @@ class SpeakersSchema(Schema):
 
 class PlaySchema(Schema):
     audio_id = fields.String(required=True)
+    audio_title = fields.String(required=False)
 
 
 class TestSoundSchema(Schema):

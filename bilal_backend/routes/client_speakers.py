@@ -21,7 +21,9 @@ class PlaySound(MethodView):
     @input(PlaySchema)
     @output(PlayedSchema)
     def post(self, data):
-        return play_sound(data['audio_id'])
+        audio_id = data['audio_id']
+        audio_title = data['audio_title'] if 'audio_title' in data else None
+        return play_sound(audio_id = audio_id, audio_title = audio_title)
 
 
 @speakers.route('/test')
