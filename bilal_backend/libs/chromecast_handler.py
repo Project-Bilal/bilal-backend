@@ -4,6 +4,7 @@ from uuid import UUID
 from bilal_backend.libs.constants import DISCOVER_TIMEOUT, GDRIVE_URL, THUMB, DEFAULT_AUDIO_TITLE
 from bilal_backend.utils.utils import db_context
 
+
 # Uses the discover function to return a list of dictionaries for the available speakers
 def get_speakers():
     devices = discover_devices()
@@ -19,6 +20,7 @@ def get_speakers():
         })
     return {"speakers": speakers}
 
+
 # play on the default speaker given an audio_id
 @db_context
 def play_sound(data, audio_id, audio_title=DEFAULT_AUDIO_TITLE):
@@ -27,18 +29,20 @@ def play_sound(data, audio_id, audio_title=DEFAULT_AUDIO_TITLE):
     device.wait()
     device.set_volume(vol)
     mc = device.media_controller
-    mc.play_media(GDRIVE_URL + audio_id, 'audio/mp3', title=audio_title, thumb=f'https://drive.google.com/uc?id={THUMB}')
+    mc.play_media(GDRIVE_URL + audio_id, 'audio/mp3', title=audio_title,
+                  thumb=f'https://drive.google.com/uc?id={THUMB}')
     return {"message": "Sound is played."}
 
+
 # test a sound on a speaker, dosen't set volume
-@db_context
 def test_sound(data):
-    print(data['speaker'])
     device = get_chromecast(data['speaker'])
     device.wait()
     mc = device.media_controller
-    mc.play_media(GDRIVE_URL + data['audio_id'], 'audio/mp3', title="This is a test from Project-Bilal..", thumb=f'https://drive.google.com/uc?id={THUMB}')
+    mc.play_media(GDRIVE_URL + data['audio_id'], 'audio/mp3', title="This is a test from Project-Bilal..",
+                  thumb=f'https://drive.google.com/uc?id={THUMB}')
     return {"message": "Sound is played."}
+
 
 # return Chromecast object based on host info in db or passed SpeakerSchema
 @db_context
@@ -52,6 +56,7 @@ def get_chromecast(data, speaker=None):
         spkr['name'],
     )
     return get_chromecast_from_host(host)
+
 
 # discovers all the devices on the network
 def discover_devices(max_devices=None, timeout=DISCOVER_TIMEOUT):

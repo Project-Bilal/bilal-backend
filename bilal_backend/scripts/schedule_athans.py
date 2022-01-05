@@ -6,6 +6,7 @@ import sys
 
 '''Needs crontab job like so: @daily pipenv shell python3 /path/to/schedule_athans.py sched > /dev/null 2>&1'''
 
+
 # get the prayer times from pt_handler
 @db_context
 def get_pt(data):
@@ -14,6 +15,7 @@ def get_pt(data):
     long = loc["long"]
     tz = loc["tz"]
     return prayer_times_handler(lat=lat, long=long, tz=tz, calc=data.get("calculation"), format='24h')
+
 
 # convert the time the pt_handler gives us to hours and minutes to use with cron
 def get_cron_times(data):
@@ -24,17 +26,19 @@ def get_cron_times(data):
         'asr',
         'maghrib',
         'isha',
-        #'imsak',
-        #'sunrise',
-        #'midnight,
+        # 'imsak',
+        # 'sunrise',
+        # 'midnight,
         # All the above is available via the API
         # if you add or remove please update the crontab file as well
     ]
 
     athan_cron = {}
     for prayer in prayers:
-        athan_cron[prayer] = {'hour' : int(athan_times[prayer].split(':')[0]), 'min' : int(athan_times[prayer].split(':')[1])}
+        athan_cron[prayer] = {'hour': int(athan_times[prayer].split(':')[0]),
+                              'min': int(athan_times[prayer].split(':')[1])}
     return athan_cron
+
 
 # delete existing scheduled prayers
 def remove_jobs():
@@ -44,6 +48,7 @@ def remove_jobs():
         if 'athan' in job.comment:
             cron.remove(job)
             cron.write()
+
 
 # schedule new prayer times
 def schedule_jobs():

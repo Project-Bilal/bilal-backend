@@ -21,7 +21,26 @@ class LocationSchema(Schema):
 class CalculationSchema(Schema):
     calculation = fields.String(
         required=True,
-        validate=validators.OneOf(["MWL", "ISNA", "Egypt", "Makkah", "Karachi", "Tehran", "Jafari"]),
+        validate=validators.OneOf([
+            "MWL",
+            "ISNA",
+            "Egypt",
+            "Makkah",
+            "Karachi",
+            "Tehran",
+            "Jafari",
+            "Moon",
+            "UAE",
+            "Kuwait",
+            "Qatar",
+            "Singapore",
+            'Jakarta',
+            'Turkey',
+            'France',
+            'Russia',
+            'Tunisia',
+            'Algeria'
+        ]),
         metadata={'description': 'The calculation method used for deriving the prayer times.'}
     )
 
@@ -80,3 +99,19 @@ class PrayerTimesSchemas(Schema):
     midnight = fields.String()
     sunrise = fields.String()
     sunset = fields.String()
+
+
+class MethodParams(Schema):
+    fajr = fields.String()
+    maghrib = fields.String()
+    isha = fields.String()
+    midnight = fields.String()
+
+
+class MethodsSchema(Schema):
+    name = fields.String()
+    params = fields.Dict(fields.Nested(MethodParams))
+
+
+class CalculationsSchema(Schema):
+    calculations = fields.Dict()
