@@ -88,7 +88,7 @@ def get_wifi():
         )
     else:
         # is rpi
-        return subprocess.getoutput("iwgetid").split('"')[1]
+        return subprocess.getoutput("iwgetid -r")
 
 
 @settings.delete('/reset')
