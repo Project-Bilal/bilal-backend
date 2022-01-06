@@ -1,4 +1,3 @@
-import subprocess
 from apiflask import APIBlueprint, input, abort, doc
 from flask.views import MethodView
 from bilal_backend.libs import settings_handler as handler
