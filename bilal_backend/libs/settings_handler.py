@@ -1,4 +1,5 @@
 from bilal_backend.utils.utils import get_tz, db_context
+from bilal_backend.scripts.schedule_notifications import sched_notifications
 
 
 @db_context
@@ -16,8 +17,7 @@ def set_user_location(data, lat, long, address):
         'tz': tz
     }
     data.set('location', location)
-
-    # TODO run cron jobs script
+    sched_notifications()
 
 
 @db_context
@@ -28,7 +28,7 @@ def get_user_calculation(data):
 @db_context
 def set_user_calculation(data, calculation):
     data.set('calculation', calculation)
-    # TODO run cron jobs script
+    sched_notifications()
 
 
 @db_context

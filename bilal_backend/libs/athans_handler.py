@@ -1,5 +1,6 @@
 from bilal_backend.utils.utils import db_context
 from bilal_backend.utils.audio_ids import audio
+from bilal_backend.scripts.schedule_notifications import sched_notifications
 
 
 @db_context
@@ -78,3 +79,8 @@ def get_notification(data):
 @db_context
 def set_notification(data, id):
     data.set('notification_id', id)
+
+def schedule_notifications():
+    if not sched_notifications():
+        return None
+    return "Notifications scheduled"

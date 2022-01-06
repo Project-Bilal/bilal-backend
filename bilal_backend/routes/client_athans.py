@@ -94,3 +94,11 @@ class NotificationAthan(MethodView):
     def put(self, audio_id):
         handlers.set_notification(audio_id)
         return 'success'
+
+@athans.route('/schedule')
+class ScheduleAthan(MethodView):
+    def get(self):
+        resp = handlers.schedule_notifications()
+        if not resp:
+            abort(status_code=412, message="Did not schedule the notifications")
+        return resp
