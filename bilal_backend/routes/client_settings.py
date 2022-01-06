@@ -1,3 +1,4 @@
+import subprocess
 from apiflask import APIBlueprint, input, abort, doc
 from flask.views import MethodView
 from bilal_backend.libs import settings_handler as handler
@@ -75,6 +76,19 @@ class Volume(MethodView):
     def put(self, volume: int):
         handler.set_volume(volume)
         return 'success'
+
+
+@settings.get('/wifi')
+@doc(responses=[200])
+def get_wifi():
+    if subprocess.getoutput("uname -m") == 'x86_64':
+        # is mac
+        return subprocess.getoutput(
+            "/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I | awk -F:  '($1 ~ \"^ *SSID$\"){print $2}' | cut -c 2-"
+        )
+    else:
+        # is rpi
+        return subprocess.getoutput("iwgetid").split('"')[1]
 
 
 @settings.delete('/reset')
