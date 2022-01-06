@@ -3,7 +3,8 @@ from lightdb import LightDB
 
 from bilal_backend.libs.constants import DATA_FILE
 from bilal_backend.libs.pt_handler import prayer_times_handler
-from bilal_backend.spec.schemas import PrayerTimesSchemas
+from bilal_backend.spec.schemas import PrayerTimesSchemas, CalculationsSchema
+from bilal_backend.utils.utils import calculations
 
 prayer_times = APIBlueprint(import_name="Prayer Times",
                             name="Prayer Times",
@@ -24,3 +25,9 @@ def get_prayer_times():
                                 long=location.get('long'),
                                 tz=location.get('tz'),
                                 calc=calc)
+
+
+@prayer_times.get('/calculations')
+@doc(responses=[200])
+def get_calculations():
+    return calculations

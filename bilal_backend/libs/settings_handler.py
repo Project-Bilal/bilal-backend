@@ -22,7 +22,8 @@ def set_user_location(data, lat, long, address):
 
 @db_context
 def get_user_calculation(data):
-    return data.get('calculation')
+    calc = data.get('calculation')
+    return calculations.get(calc)
 
 
 @db_context
@@ -32,43 +33,26 @@ def set_user_calculation(data, calculation):
 
 
 @db_context
-def get_user_fajir_athan(data):
-    return data.get('athan_fajir')
-
-
-@db_context
-def set_user_fajir_athan(data, athan):
-    data.set('athan_fajir', athan)
-
-
-@db_context
-def get_user_athan_delay(data):
-    return data.get('athan_delay')
-
-
-@db_context
-def set_user_athan_delay(data, delay):
-    data.set('athan_delay', delay)
-
-
-@db_context
 def get_speaker(data):
     return data.get('speaker')
 
 
 @db_context
-def set_speaker(data, speaker):
+def set_speaker(data, speaker: dict):
     data.set('speaker', speaker)
 
 
 @db_context
 def get_volume(data):
-    return data.get('speaker_volume')
+    d = data.get('speaker')
+    return d.get('volume')
 
 
 @db_context
-def set_volume(data, volume):
-    data.set('speaker_volume', volume)
+def set_volume(data, volume: dict):
+    speaker = data.get('speaker')
+    speaker.update(volume)
+    data.set('speaker', speaker)
 
 
 @db_context
