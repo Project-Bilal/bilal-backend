@@ -10,8 +10,3 @@
 
 1. `pipenv shell`
 2. `pipenv install xxxx`
-
-## To start with a fresh env: ##
-
-1. `pipenv --rm`
-2. `rm Pipfil*`
