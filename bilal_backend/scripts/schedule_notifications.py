@@ -21,6 +21,7 @@ def get_pt(data):
         tz = loc["tz"]
         return prayer_times_handler(lat=lat, long=long, tz=tz, calc=calc, format='24h')
 
+
 # convert the time the pt_handler gives us to hours and minutes to use with cron
 # return a list of dicts with the information needed to schedule cronjobs
 def get_cron_times(athan_times):
@@ -40,23 +41,23 @@ def get_cron_times(athan_times):
     for prayer in prayers:
         notifications.append(
             {
-                'name' : prayer,
-                'hour' :  int(athan_times[prayer].split(':')[0]),
-                'min' : int(athan_times[prayer].split(':')[1]),
+                'name': prayer,
+                'hour':  int(athan_times[prayer].split(':')[0]),
+                'min': int(athan_times[prayer].split(':')[1]),
             }
         )
     return notifications
+
 
 def add_notification_scheduler():
     pwd = os.getcwd()
     user = getpass.getuser()
     with CronTab(user=user) as cron:
         cron.remove_all(comment='bilal_scheduler')
-        # job = cron.new(command=f'cd {pwd} && /usr/local/bin/pipenv run python3 bilal_backend/scripts/schedule_notifications.py > /dev/null 2>&1 # bilal_scheduler')
-        job = cron.new(command=f'curl -X GET "http://localhost:5002/athans/schedule" > info.log 2>&1 # bilal_scheduler')
-        job.minute.every(2)
-        # job.hour.on(1)
-        # job.minute.on(0)
+        job = cron.new(command=f'curl -X GET http://localhost:5002/athans/schedule > /dev/null 2>&1 # bilal_scheduler')
+        job.hour.on(1)
+        job.minute.on(0)
+
 
 # schedule new notification times and remove existing ones
 def add_notifications(notifications):
@@ -64,12 +65,12 @@ def add_notifications(notifications):
     with CronTab(user=user) as cron:
         cron.remove_all(comment='notification')    
         for notification in notifications:
-            # TODO update the command to call the end point to play
-            # TODO use the db to get the athan id like so data.get("fajr_athan")["audio_id"]
-            job = cron.new(command=f'curl -X GET "http://localhost:5002/speakers/play_notification > /dev/null 2>&1 # notification')
+            name = notification['name']
+            job = cron.new(command=f'curl -X GET http://localhost:5002/speakers/play/notification/{name} > /dev/null 2>&1 # notification')
             job.hour.on(notification['hour'])
             job.minute.on(notification['min'])
     return None
+
 
 def sched_notifications():
     athan_times = get_pt()

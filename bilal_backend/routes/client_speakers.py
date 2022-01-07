@@ -1,6 +1,6 @@
 from apiflask import APIBlueprint, output, input, abort, doc
 from flask.views import MethodView
-from bilal_backend.libs.chromecast_handler import get_speakers, play_sound, test_sound
+from bilal_backend.libs.chromecast_handler import get_speakers, play_sound, test_sound, play_notification
 from bilal_backend.spec.schemas import SpeakersSchema, PlayedSchema, PlaySchema, TestSoundSchema
 
 speakers = APIBlueprint(import_name="Speaker",
@@ -23,7 +23,14 @@ class PlaySound(MethodView):
     def post(self, data):
         audio_id = data['audio_id']
         audio_title = data['audio_title'] if 'audio_title' in data else None
-        return play_sound(audio_id = audio_id, audio_title = audio_title)
+        return play_sound(audio_id=audio_id, audio_title=audio_title)
+
+
+@speakers.route('/play/notification/<string:notification>')
+class PlayNotification(MethodView):
+    @output(PlayedSchema)
+    def get(self, notification):
+        return play_notification(notification=notification)
 
 
 @speakers.route('/test')

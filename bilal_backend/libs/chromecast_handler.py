@@ -34,6 +34,20 @@ def play_sound(data, audio_id, audio_title=DEFAULT_AUDIO_TITLE):
     return {"message": "Sound is played."}
 
 
+# play on the default speaker given a notification object
+@db_context
+def play_notification(data, notification):
+    vol = float(data.get("speaker")['volume']) / 10
+    audio_id = data.get(notification)['audio_id']
+    device = get_chromecast()
+    device.wait()
+    device.set_volume(vol)
+    mc = device.media_controller
+    mc.play_media(GDRIVE_URL + audio_id, 'audio/mp3', title=DEFAULT_AUDIO_TITLE,
+                  thumb=f'https://drive.google.com/uc?id={THUMB}')
+    return {"message": "Sound is played."}
+
+
 # test a sound on a speaker, dosen't set volume
 def test_sound(data):
     device = get_chromecast(data['speaker'])

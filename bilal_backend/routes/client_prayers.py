@@ -1,5 +1,5 @@
 from apiflask import APIBlueprint, output, abort, doc
-from lightdb import LightDB
+from bilal_backend.utils.utils import db_context
 
 from bilal_backend.libs.constants import DATA_FILE
 from bilal_backend.libs.pt_handler import prayer_times_handler
@@ -11,12 +11,12 @@ prayer_times = APIBlueprint(import_name="Prayer Times",
                             tag="Prayer Times",
                             url_prefix='/prayer-times')
 
-
+@db_context
 @prayer_times.get('/')
 @output(PrayerTimesSchemas)
 @doc(responses=[200, 412])
-def get_prayer_times():
-    data = LightDB(DATA_FILE)
+def get_prayer_times(data):
+    data = data(DATA_FILE)
     calc = data.get('calculation')
     location = data.get('location')
     if not calc or not location or 'lat' not in location or 'long' not in location or 'tz' not in location:
