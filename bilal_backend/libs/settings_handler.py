@@ -44,13 +44,13 @@ def set_speaker(data, speaker: dict):
 
 @db_context
 def get_volume(data):
-    d = data.get('speaker')
+    d = data.get('speaker', {})
     return d.get('volume')
 
 
 @db_context
 def set_volume(data, volume: dict):
-    speaker = data.get('speaker')
+    speaker = data.get('speaker', {})
     speaker.update(volume)
     data.set('speaker', speaker)
 
