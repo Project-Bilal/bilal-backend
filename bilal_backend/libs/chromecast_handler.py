@@ -1,7 +1,17 @@
-from pychromecast import threading, CastBrowser, SimpleCastListener, get_chromecast_from_host
+from pychromecast import (
+    threading,
+    CastBrowser,
+    SimpleCastListener,
+    get_chromecast_from_host,
+)
 from zeroconf import Zeroconf
 from uuid import UUID
-from bilal_backend.libs.constants import DISCOVER_TIMEOUT, GDRIVE_URL, THUMB, DEFAULT_AUDIO_TITLE
+from bilal_backend.libs.constants import (
+    DISCOVER_TIMEOUT,
+    GDRIVE_URL,
+    THUMB,
+    DEFAULT_AUDIO_TITLE,
+)
 from bilal_backend.utils.utils import db_context
 
 
@@ -10,64 +20,80 @@ def get_speakers():
     devices = discover_devices()
     speakers = []
     for device in devices:
-        speakers.append({
-            "name": device.friendly_name,
-            "ip": device.host,
-            "port": device.port,
-            "uuid": str(device.uuid),
-            "model": device.model_name,
-            "cast_type": "Group" if device.cast_type else "Audio",
-        })
+        speakers.append(
+            {
+                "name": device.friendly_name,
+                "ip": device.host,
+                "port": device.port,
+                "uuid": str(device.uuid),
+                "model": device.model_name,
+                "cast_type": "Group" if device.cast_type else "Audio",
+            }
+        )
     return {"speakers": speakers}
 
 
 # play on the default speaker given an audio_id
 @db_context
 def play_sound(data, audio_id, audio_title=DEFAULT_AUDIO_TITLE):
-    vol = float(data.get("speaker")['volume']) / 10
+    vol = float(data.get("speaker")["volume"]) / 10
     device = get_chromecast()
     device.wait()
     device.set_volume(vol)
     mc = device.media_controller
-    mc.play_media(GDRIVE_URL + audio_id, 'audio/mp3', title=audio_title,
-                  thumb=f'https://drive.google.com/uc?id={THUMB}')
+    mc.play_media(
+        GDRIVE_URL + audio_id,
+        "audio/mp3",
+        title=audio_title,
+        thumb=f"https://drive.google.com/uc?id={THUMB}",
+    )
     return {"message": "Sound is played."}
 
 
 # play on the default speaker given a notification object
 @db_context
 def play_notification(data, notification):
-    vol = float(data.get("speaker")['volume']) / 10
-    audio_id = data.get(notification)['audio_id']
+    vol = float(data.get("speaker", {}).get("volume", 0)) / 10
+    audio_id = data.get(notification, {}).get("audio_id")
+    if not audio_id:
+        return None
     device = get_chromecast()
     device.wait()
     device.set_volume(vol)
     mc = device.media_controller
-    mc.play_media(GDRIVE_URL + audio_id, 'audio/mp3', title=DEFAULT_AUDIO_TITLE,
-                  thumb=f'https://drive.google.com/uc?id={THUMB}')
+    mc.play_media(
+        GDRIVE_URL + audio_id,
+        "audio/mp3",
+        title=DEFAULT_AUDIO_TITLE,
+        thumb=f"https://drive.google.com/uc?id={THUMB}",
+    )
     return {"message": "Sound is played."}
 
 
 # test a sound on a speaker, dosen't set volume
 def test_sound(data):
-    device = get_chromecast(data['speaker'])
+    device = get_chromecast(data["speaker"])
     device.wait()
     mc = device.media_controller
-    mc.play_media(GDRIVE_URL + data['audio_id'], 'audio/mp3', title="This is a test from Project-Bilal..",
-                  thumb=f'https://drive.google.com/uc?id={THUMB}')
+    mc.play_media(
+        GDRIVE_URL + data["audio_id"],
+        "audio/mp3",
+        title="This is a test from Project-Bilal..",
+        thumb=f"https://drive.google.com/uc?id={THUMB}",
+    )
     return {"message": "Sound is played."}
 
 
 # return Chromecast object based on host info in db or passed SpeakerSchema
 @db_context
 def get_chromecast(data, speaker=None):
-    spkr = data['speaker'] if not speaker else speaker
+    spkr = data["speaker"] if not speaker else speaker
     host = (
-        spkr['ip'],
-        spkr['port'],
-        UUID(spkr['uuid']),
-        spkr['model'],
-        spkr['name'],
+        spkr["ip"],
+        spkr["port"],
+        UUID(spkr["uuid"]),
+        spkr["model"],
+        spkr["name"],
     )
     return get_chromecast_from_host(host)
 

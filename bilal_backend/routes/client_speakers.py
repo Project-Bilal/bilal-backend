@@ -1,39 +1,52 @@
-from apiflask import APIBlueprint, output, input, abort, doc
+from apiflask import APIBlueprint, output, input, abort
+from apiflask import abort
 from flask.views import MethodView
-from bilal_backend.libs.chromecast_handler import get_speakers, play_sound, test_sound, play_notification
-from bilal_backend.spec.schemas import SpeakersSchema, PlayedSchema, PlaySchema, TestSoundSchema
+from bilal_backend.libs.chromecast_handler import (
+    get_speakers,
+    play_sound,
+    test_sound,
+    play_notification,
+)
+from bilal_backend.spec.schemas import (
+    SpeakersSchema,
+    PlayedSchema,
+    PlaySchema,
+    TestSoundSchema,
+)
 
-speakers = APIBlueprint(import_name="Speaker",
-                        name="Speakers",
-                        tag="Speakers",
-                        url_prefix='/speakers')
+speakers = APIBlueprint(
+    import_name="Speaker", name="Speakers", tag="Speakers", url_prefix="/speakers"
+)
 
 
-@speakers.route('/')
+@speakers.route("/")
 class Speakers(MethodView):
     @output(SpeakersSchema)
     def get(self):
         return get_speakers()
 
 
-@speakers.route('/play')
+@speakers.route("/play")
 class PlaySound(MethodView):
     @input(PlaySchema)
     @output(PlayedSchema)
     def post(self, data):
-        audio_id = data['audio_id']
-        audio_title = data['audio_title'] if 'audio_title' in data else None
+        audio_id = data["audio_id"]
+        audio_title = data["audio_title"] if "audio_title" in data else None
         return play_sound(audio_id=audio_id, audio_title=audio_title)
 
 
-@speakers.route('/play/notification/<string:notification>')
+@speakers.route("/play/notification/<string:notification>")
 class PlayNotification(MethodView):
     @output(PlayedSchema)
     def get(self, notification):
-        return play_notification(notification=notification)
+        response = play_notification(notification=notification)
+        if not response:
+            abort(status_code=412, message="Notification not played")
+        return response
 
 
-@speakers.route('/test')
+@speakers.route("/test")
 class TestSound(MethodView):
     @input(TestSoundSchema)
     @output(PlayedSchema)

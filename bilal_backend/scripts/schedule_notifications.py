@@ -1,6 +1,7 @@
 from crontab import CronTab
 from bilal_backend.libs.pt_handler import prayer_times_handler
 from bilal_backend.utils.utils import db_context
+from bilal_backend.libs.constants import PrayerNames
 import getpass
 import os
 
@@ -27,14 +28,11 @@ def get_pt(data):
 def get_cron_times(athan_times):
     """These prayers will be scheduled"""
     prayers = [
-        'fajr',
-        'dhuhr',
-        'asr',
-        'maghrib',
-        'isha',
-        #'imsak',
-        #'sunrise',
-        #'midnight,
+        PrayerNames.FAJR,
+        PrayerNames.DHUHR,
+        PrayerNames.ASR,
+        PrayerNames.MAGHRIB,
+        PrayerNames.ISHA
     ]
 
     notifications = []
@@ -76,7 +74,6 @@ def sched_notifications():
     athan_times = get_pt()
     if not athan_times:
         return None
-
     notifications = get_cron_times(athan_times)
     add_notifications(notifications)
     return "Success"
