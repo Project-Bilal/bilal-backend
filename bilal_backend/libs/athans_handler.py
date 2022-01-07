@@ -5,13 +5,15 @@ from bilal_backend.scripts.schedule_notifications import sched_notifications
 
 @db_context
 def get_athan(data, prayer):
-    audio_id = data.get(prayer)
+    audio_id = data.get(prayer, {})
     return audio.get(audio_id.get('audio_id'))
 
 
 @db_context
 def set_athan(data, prayer, audio_id):
-    data.set(prayer, audio_id)
+    prayer_obj = data.get(prayer, {})
+    prayer_obj.update(audio_id)
+    data.set(prayer, prayer_obj)
 
 
 def schedule_notifications():
