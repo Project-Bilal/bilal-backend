@@ -55,7 +55,7 @@ def play_sound(data, audio_id, audio_title=DEFAULT_AUDIO_TITLE):
 def play_notification(data, notification):
     data = data.get("athan", {}).get(notification, {})
     audio_id = data.get("audio_id", {})
-    vol = float(data.get("volume", {}), 0) / 10
+    vol = float(data.get("volume", 0)) / 10
     if not audio_id or not vol:
         return None
     device = get_chromecast()
