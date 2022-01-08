@@ -1,22 +1,35 @@
-from bilal_backend.utils.utils import db_context
+from bilal_backend.utils.utils import db_context, athans_settings_context
 from bilal_backend.utils.audio_ids import audio
-from bilal_backend.scripts.schedule_notifications import sched_notifications
 
 
 @db_context
-def get_athan(data, prayer):
-    audio_id = data.get(prayer, {})
-    return audio.get(audio_id.get('audio_id'))
+@athans_settings_context
+def set_athan(prayer_athan_settings, data, prayer, audio_id):
+    prayer_athan_settings.update(audio.get(audio_id, {}))
+    return prayer_athan_settings
 
 
 @db_context
-def set_athan(data, prayer, audio_id):
-    prayer_obj = data.get(prayer, {})
-    prayer_obj.update(audio_id)
-    data.set(prayer, prayer_obj)
+@athans_settings_context
+def set_volume(prayer_athan_settings, data, prayer, volume):
+    prayer_athan_settings.update({'volume': volume})
+    return prayer_athan_settings
 
 
-def schedule_notifications():
-    if not sched_notifications():
-        return None
-    return "Notifications scheduled"
+@db_context
+@athans_settings_context
+def set_notification(prayer_athan_settings, data, prayer, notification_audio):
+    prayer_athan_settings.update({'notification_id': notification_audio})
+    return prayer_athan_settings
+
+
+@db_context
+@athans_settings_context
+def set_notif_time(prayer_athan_settings, data, prayer, notification_time):
+    prayer_athan_settings.update({'notification_time': notification_time})
+    return prayer_athan_settings
+
+
+@db_context
+def get_athan_settings(data):
+    return data.get('athans')

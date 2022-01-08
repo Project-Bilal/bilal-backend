@@ -19,8 +19,24 @@ def get_tz(lat, long):
 def db_context(f):
     @wraps(f)
     def wrapper(*args, **kwargs):
-        data = LightDB(DATA_FILE)
-        return f(data, *args, **kwargs)
+        db = LightDB(DATA_FILE)
+        return f(db, *args, **kwargs)
+
+    return wrapper
+
+
+def athans_settings_context(f):
+    @wraps(f)
+    def wrapper(*args, **kwargs):
+        data = args[0]
+        prayer = args[1]
+        athans = data.get('athans', {})
+        prayer_athan_settings = athans.get(prayer, {})
+
+        prayer_athan_settings = f(prayer_athan_settings, *args, **kwargs)
+
+        athans.update({prayer: prayer_athan_settings})
+        data.set('athans', athans)
 
     return wrapper
 
@@ -28,22 +44,22 @@ def db_context(f):
 calculations = {
     "MWL": {
         "name": "Muslim World League",
-        "key": "MWL",
+        "method": "MWL",
         "params": {"fajr": 18, "isha": 17},
     },
     "ISNA": {
         "name": "Islamic Society of North America (ISNA)",
-        "key": "ISNA",
+        "method": "ISNA",
         "params": {"fajr": 15, "isha": 15},
     },
     "Egypt": {
         "name": "Egyptian General Authority of Survey",
-        "key": "Egypt",
+        "method": "Egypt",
         "params": {"fajr": 19.5, "isha": 17.5},
     },
     "Makkah": {
         "name": "Umm Al-Qura University, Makkah",
-        "key": "Makkah",
+        "method": "Makkah",
         "params": {
             "fajr": 18.5,
             "isha": "90 min",
@@ -51,74 +67,74 @@ calculations = {
     },
     "Karachi": {
         "name": "University of Islamic Sciences, Karachi",
-        "key": "Karachi",
+        "method": "Karachi",
         "params": {"fajr": 18, "isha": 18},
     },
     "Tehran": {
         "name": "Institute of Geophysics, University of Tehran",
-        "key": "Tehran",
+        "method": "Tehran",
         "params": {"fajr": 17.7, "isha": 14, "maghrib": 4.5, "midnight": "Jafari"},
     },
     # isha is not explicitly specified in this method
     "Jafari": {
         "name": "Shia Ithna-Ashari, Leva Institute, Qum",
-        "key": "Jafari",
+        "method": "Jafari",
         "params": {"fajr": 16, "isha": 14, "maghrib": 4, "midnight": "Jafari"},
     },
     # Added Calculations
     "Moon": {
         "name": "Moonsighting Committee",
-        "key": "Moon",
+        "method": "Moon",
         "params": {"fajr": 18, "isha": 18},
     },
     "UAE": {
         "name": "Authority of Dubai, UAE",
-        "key": "UAE",
+        "method": "UAE",
         "params": {"fajr": 18.2, "isha": 18.2},
     },
     "Kuwait": {
         "name": "Authority of Kuwait",
-        "key": "Kuwait",
+        "method": "Kuwait",
         "params": {"fajr": 18, "isha": 17.5},
     },
     "Qatar": {
         "name": "Authority of Qatar",
-        "key": "Qatar",
+        "method": "Qatar",
         "params": {"fajr": 18, "isha": "90 min"},
     },
     "Singapore": {
         "name": "Majlis Ugama Islam Singapura",
-        "key": "Singapore",
+        "method": "Singapore",
         "params": {"fajr": 20, "isha": 18},
     },
     "Jakarta": {
         "name": "KEMENEG Jakarta Pusat",
-        "key": "Jakarta",
+        "method": "Jakarta",
         "params": {"fajr": 20, "isha": 18},
     },
-    "Turkey": {
-        "name": "Diyanet Isleri Baskanligi, Turkey",
-        "key": "Turkey",
+    "Turmethod": {
+        "name": "Diyanet Isleri Baskanligi, Turmethod",
+        "method": "Turmethod",
         "params": {"fajr": 18, "isha": 17},
     },
     "France": {
         "name": "Union of Islamic Orgs. of France",
-        "key": "France",
+        "method": "France",
         "params": {"fajr": 12, "isha": 12},
     },
     "Russia": {
         "name": "Spiritual Administration of Muslims of Russia",
-        "key": "Russia",
+        "method": "Russia",
         "params": {"fajr": 16, "isha": 15},
     },
     "Tunisia": {
         "name": "Tunisian Ministry of Religious Affairs",
-        "key": "Tunisia",
+        "method": "Tunisia",
         "params": {"fajr": 10, "isha": 10},
     },
     "Algeria": {
         "name": "Algerian Ministry of Religious Affairs and Wakfs",
-        "key": "Algeria",
+        "method": "Algeria",
         "params": {"fajr": 18, "isha": 17},
     },
 }

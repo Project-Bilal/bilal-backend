@@ -1,6 +1,5 @@
 from apiflask import APIBlueprint, output, input, abort
 from apiflask import abort
-from flask.views import MethodView
 from bilal_backend.libs.chromecast_handler import (
     get_speakers,
     play_sound,
@@ -20,35 +19,31 @@ speakers = APIBlueprint(
 
 
 @speakers.route("/")
-class Speakers(MethodView):
-    @output(SpeakersSchema)
-    def get(self):
-        return get_speakers()
+@output(SpeakersSchema)
+def get_speakers():
+    return get_speakers()
 
 
-@speakers.route("/play")
-class PlaySound(MethodView):
-    @input(PlaySchema)
-    @output(PlayedSchema)
-    def post(self, data):
-        audio_id = data["audio_id"]
-        audio_title = data["audio_title"] if "audio_title" in data else None
-        return play_sound(audio_id=audio_id, audio_title=audio_title)
+@speakers.post("/play")
+@input(PlaySchema)
+@output(PlayedSchema)
+def play_athan(data):
+    audio_id = data["audio_id"]
+    audio_title = data["audio_title"] if "audio_title" in data else None
+    return play_sound(audio_id=audio_id, audio_title=audio_title)
 
 
-@speakers.route("/play/notification/<string:notification>")
-class PlayNotification(MethodView):
-    @output(PlayedSchema)
-    def get(self, notification):
-        response = play_notification(notification=notification)
-        if not response:
-            abort(status_code=412, message="Notification not played")
-        return response
+@speakers.get("/play/notification/<string:notification>")
+@output(PlayedSchema)
+def play_notification(notification):
+    response = play_notification(notification=notification)
+    if not response:
+        abort(status_code=412, message="Notification not played")
+    return response
 
 
-@speakers.route("/test")
-class TestSound(MethodView):
-    @input(TestSoundSchema)
-    @output(PlayedSchema)
-    def post(self, data):
-        return test_sound(data)
+@speakers.post("/test")
+@input(TestSoundSchema)
+@output(PlayedSchema)
+def test_sound(self, data):
+    return test_sound(data)

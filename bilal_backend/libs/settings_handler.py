@@ -22,13 +22,22 @@ def set_user_location(data, lat, long, address):
 
 @db_context
 def get_user_calculation(data):
-    calc = data.get('calculation')
-    return calculations.get(calc)
+    return data.get('calculation')
 
 
 @db_context
-def set_user_calculation(data, calculation):
-    data.set('calculation', calculation)
+def set_method(data, method):
+    calc = data.get('calculation', {})
+    calc.update({'method': calculations.get(method)})
+    data.set('calculation', calc)
+    sched_notifications()
+
+
+@db_context
+def set_jurisprudence(data, jurisprudence):
+    calc = data.get('calculation', {})
+    calc.update({'jurisprudence': jurisprudence})
+    data.set('calculation', calc)
     sched_notifications()
 
 
@@ -39,19 +48,6 @@ def get_speaker(data):
 
 @db_context
 def set_speaker(data, speaker: dict):
-    data.set('speaker', speaker)
-
-
-@db_context
-def get_volume(data):
-    d = data.get('speaker', {})
-    return d.get('volume')
-
-
-@db_context
-def set_volume(data, volume: dict):
-    speaker = data.get('speaker', {})
-    speaker.update(volume)
     data.set('speaker', speaker)
 
 
