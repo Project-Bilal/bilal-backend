@@ -9,7 +9,7 @@ def prayer_times_handler(
 ):
     pray_times = PrayTimes(calMethod=calc)
     if jur:
-        PrayTimes.adjust({"asr": jur})
+        pray_times.adjust({"asr": jur})
     return pray_times.getTimes(
         date=date.today(), coords=(lat, long), timezone=tz, format=format
     )
