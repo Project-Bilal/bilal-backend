@@ -20,7 +20,7 @@ speakers = APIBlueprint(
 
 @speakers.get("/")
 @output(SpeakersSchema)
-def get_speakers():
+def get_speakers_on_network():
     return get_speakers()
 
 
