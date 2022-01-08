@@ -18,7 +18,7 @@ speakers = APIBlueprint(
 )
 
 
-@speakers.route("/")
+@speakers.get("/")
 @output(SpeakersSchema)
 def get_speakers():
     return get_speakers()
