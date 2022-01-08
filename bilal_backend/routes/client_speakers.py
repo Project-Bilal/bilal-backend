@@ -35,7 +35,7 @@ def play_athan(data):
 
 @speakers.get("/play/notification/<string:notification>")
 @output(PlayedSchema)
-def play_notification(notification):
+def play_notificatio_on_speaker(notification):
     response = play_notification(notification=notification)
     if not response:
         abort(status_code=412, message="Notification not played")
@@ -45,5 +45,5 @@ def play_notification(notification):
 @speakers.post("/test")
 @input(TestSoundSchema)
 @output(PlayedSchema)
-def test_sound(self, data):
+def test_sound_on_speaker(self, data):
     return test_sound(data)
