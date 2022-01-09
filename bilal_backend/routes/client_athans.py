@@ -3,7 +3,7 @@ from bilal_backend.utils.audio_ids import audio
 from bilal_backend.libs import athans_handler as handler
 from bilal_backend.libs.constants import SUCCESS
 from bilal_backend.scripts.schedule_notifications import sched_notifications
-from bilal_backend.spec.schemas import ToggleAthan, ToggleNotification
+from bilal_backend.spec.schemas import Toggle
 
 athans = APIBlueprint(import_name="Athans", name="Athans", tag="Athan", url_prefix='/athans')
 
@@ -46,17 +46,17 @@ def set_notification_time(prayer, notification_time):
 
 
 @athans.put('/<string:prayer>/toggle-athan')
-@input(ToggleAthan, location='query')
-def toggle_athan(prayer, athan_on):
-    athan_on = athan_on.get('athan_on')
+@input(Toggle, location='query')
+def toggle_athan(prayer, on):
+    athan_on = on.get('on')
     handler.toggle_athan(prayer, athan_on)
     return SUCCESS
 
 
 @athans.put('/<string:prayer>/toggle-notification')
-@input(ToggleNotification, location='query')
-def toggle_notification(prayer, notification_on):
-    notification_on = notification_on.get('notification_on')
+@input(Toggle, location='query')
+def toggle_notification(prayer, on):
+    notification_on = on.get('on')
     handler.toggle_notification(prayer, notification_on)
     return SUCCESS
 
