@@ -22,13 +22,16 @@ def set_user_location(data, lat, long, address):
 
 @db_context
 def get_user_calculation(data):
-    return data.get('calculation')
+    calc = data.get('calculation', {})
+    method = calc.get('method')
+    calc.update({'method': calculations.get(method, {})})
+    return calc
 
 
 @db_context
 def set_method(data, method):
     calc = data.get('calculation', {})
-    calc.update({'method': calculations.get(method)})
+    calc.update({'method': method})
     data.set('calculation', calc)
     sched_notifications()
 
