@@ -1,11 +1,10 @@
 from crontab import CronTab
 from bilal_backend.libs.pt_handler import prayer_times_handler
 from bilal_backend.utils.utils import db_context
-from bilal_backend.libs.constants import PrayerNames
 import getpass
 import os
+from datetime import datetime, timedelta
 
-"""Needs crontab job like so: 0 1 * * * pipenv shell python3 /path/to/schedule_athans.py > /dev/null 2>&1"""
 
 # get the prayer times from pt_handler
 @db_context
@@ -27,25 +26,39 @@ def get_pt(data):
 
 # convert the time the pt_handler gives us to hours and minutes to use with cron
 # return a list of dicts with the information needed to schedule cronjobs
-def get_cron_times(athan_times):
-    """These prayers will be scheduled"""
-    prayers = [
-        PrayerNames.FAJR,
-        PrayerNames.DHUHR,
-        PrayerNames.ASR,
-        PrayerNames.MAGHRIB,
-        PrayerNames.ISHA,
-    ]
-
+@db_context
+def get_cron_times(data, athan_times):
+    data = data.get("athan", {})
+    if not data:
+        return None
     notifications = []
-    for prayer in prayers:
-        notifications.append(
-            {
-                "name": prayer,
-                "hour": int(athan_times[prayer].split(":")[0]),
-                "min": int(athan_times[prayer].split(":")[1]),
-            }
-        )
+    for prayer in data:
+        prayer_info = data.get(prayer, {})
+        if prayer_info:
+            if prayer_info.get("athan_on", {}):
+                notifications.append(
+                    {
+                        "athan": prayer,
+                        "type": "athan",
+                        "hour": int(athan_times[prayer].split(":")[0]),
+                        "min": int(athan_times[prayer].split(":")[1]),
+                    }
+                )
+            if prayer_info.get("notification_on", {}):
+                offset = prayer_info.get("notification_time", {})
+                if offset:
+                    delta = timedelta(minutes=offset)
+                    hour = int(athan_times[prayer].split(":")[0])
+                    min = int(athan_times[prayer].split(":")[1])
+                    play_time = datetime.now().replace(hour=hour, minute=min) - delta
+                    notifications.append(
+                        {
+                            "athan": prayer,
+                            "type": "notification",
+                            "hour": play_time.hour,
+                            "min": play_time.minute,
+                        }
+                    )
     return notifications
 
 
@@ -67,9 +80,10 @@ def add_notifications(notifications):
     with CronTab(user=user) as cron:
         cron.remove_all(comment="notification")
         for notification in notifications:
-            name = notification["name"]
+            athan = notification["athan"]
+            type = notification["type"]
             job = cron.new(
-                command=f"curl -X GET http://localhost:5002/speakers/play/notification/{name} > /dev/null 2>&1 # notification"
+                command=f"curl -X GET http://localhost:5002/speakers/play/{athan}/{type} > /dev/null 2>&1 # notification"
             )
             job.hour.on(notification["hour"])
             job.minute.on(notification["min"])
@@ -81,5 +95,7 @@ def sched_notifications():
     if not athan_times:
         return None
     notifications = get_cron_times(athan_times)
+    if not notifications:
+        return None
     add_notifications(notifications)
     return "Success"

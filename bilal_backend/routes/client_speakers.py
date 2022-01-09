@@ -33,10 +33,10 @@ def play_athan(data):
     return play_sound(audio_id=audio_id, audio_title=audio_title)
 
 
-@speakers.get("/play/notification/<string:notification>")
+@speakers.get("/play/<string:athan>/<string:type>")
 @output(PlayedSchema)
-def play_notificatio_on_speaker(notification):
-    response = play_notification(notification=notification)
+def play_notification_on_speaker(athan, type):
+    response = play_notification(athan=athan, type=type)
     if not response:
         abort(status_code=412, message="Notification not played")
     return response

@@ -52,9 +52,11 @@ def play_sound(data, audio_id, audio_title=DEFAULT_AUDIO_TITLE):
 
 # play on the default speaker given a notification object
 @db_context
-def play_notification(data, notification):
-    data = data.get("athan", {}).get(notification, {})
-    audio_id = data.get("audio_id", {})
+def play_notification(data, athan, type):
+    data = data.get("athan", {}).get(athan, {})
+    audio_id = (
+        data.get("audio_id", {}) if type == "athan" else data.get("notification_id", {})
+    )
     vol = float(data.get("volume", 0)) / 10
     if not audio_id or not vol:
         return None
