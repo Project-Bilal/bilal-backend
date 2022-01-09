@@ -70,7 +70,6 @@ def play_notification(data, athan, type, audio_id, vol):
 
 
 # test a sound on a speaker, dosen't set volume
-@db_context
 def test_sound(data):
     device = get_chromecast(data["speaker"])
     device.wait()
