@@ -1,8 +1,9 @@
-from apiflask import APIBlueprint, abort
+from apiflask import APIBlueprint, abort, input
 from bilal_backend.utils.audio_ids import audio
 from bilal_backend.libs import athans_handler as handler
 from bilal_backend.libs.constants import SUCCESS
 from bilal_backend.scripts.schedule_notifications import sched_notifications
+from bilal_backend.spec.schemas import ToggleAthan, ToggleNotification
 
 athans = APIBlueprint(import_name="Athans", name="Athans", tag="Athan", url_prefix='/athans')
 
@@ -41,6 +42,22 @@ def set_notification_audio(prayer, audio_id):
 @athans.put('/<string:prayer>/notification-time/<int:notification_time>')
 def set_notification_time(prayer, notification_time):
     handler.set_notif_time(prayer, notification_time)
+    return SUCCESS
+
+
+@athans.put('/<string:prayer>/toggle-athan')
+@input(ToggleAthan, location='query')
+def toggle_athan(prayer, athan_on):
+    athan_on = athan_on.get('athan_on')
+    handler.toggle_athan(prayer, athan_on)
+    return SUCCESS
+
+
+@athans.put('/<string:prayer>/toggle-notification')
+@input(ToggleNotification, location='query')
+def toggle_notification(prayer, notification_on):
+    notification_on = notification_on.get('notification_on')
+    handler.toggle_notification(prayer, notification_on)
     return SUCCESS
 
 
