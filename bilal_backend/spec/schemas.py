@@ -117,9 +117,5 @@ class CalculationsSchema(Schema):
     calculations = fields.Dict()
 
 
-class ToggleAthan(Schema):
-    athan_on = fields.Boolean()
-
-
-class ToggleNotification(Schema):
-    notification_on = fields.Boolean()
+class Toggle(Schema):
+    on = fields.Boolean()
