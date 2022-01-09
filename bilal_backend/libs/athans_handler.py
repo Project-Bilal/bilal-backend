@@ -46,4 +46,4 @@ def toggle_notification(prayer_athan_settings, data, prayer, notification_on):
 
 @db_context
 def get_athan_settings(data):
-    return data.get('athans')
+    return data.get('athans', {})

@@ -15,10 +15,7 @@ def get_athans():
 
 @athans.get('/settings')
 def get_athans_settings():
-    resp = handler.get_athan_settings()
-    if not resp:
-        abort(status_code=412, message="no athans settings saved")
-    return resp
+    return handler.get_athan_settings()
 
 
 @athans.put('/<string:prayer>/volume/<int:volume>')
