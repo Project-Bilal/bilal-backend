@@ -35,30 +35,42 @@ def get_cron_times(data, athan_times):
     for prayer in data:
         prayer_info = data.get(prayer, {})
         if prayer_info:
-            if prayer_info.get("athan_on", {}):
-                notifications.append(
-                    {
-                        "athan": prayer,
-                        "type": "athan",
-                        "hour": int(athan_times[prayer].split(":")[0]),
-                        "min": int(athan_times[prayer].split(":")[1]),
-                    }
-                )
-            if prayer_info.get("notification_on", {}):
-                offset = prayer_info.get("notification_time", {})
-                if offset:
-                    delta = timedelta(minutes=offset)
-                    hour = int(athan_times[prayer].split(":")[0])
-                    min = int(athan_times[prayer].split(":")[1])
-                    play_time = datetime.now().replace(hour=hour, minute=min) - delta
-                    notifications.append(
-                        {
-                            "athan": prayer,
-                            "type": "notification",
-                            "hour": play_time.hour,
-                            "min": play_time.minute,
-                        }
-                    )
+            volume = prayer_info.get("volume", {})
+            if volume:
+                if prayer_info.get("athan_on", {}):
+                    audio_id = prayer_info.get("audio_id", {})
+                    if audio_id:
+                        notifications.append(
+                            {
+                                "athan": prayer,
+                                "type": "athan",
+                                "hour": int(athan_times[prayer].split(":")[0]),
+                                "min": int(athan_times[prayer].split(":")[1]),
+                                "audio_id": audio_id,
+                                "vol": volume,
+                            }
+                        )
+                if prayer_info.get("notification_on", {}):
+                    audio_id = prayer_info.get("notification_id", {})
+                    if audio_id:
+                        offset = prayer_info.get("notification_time", {})
+                        if offset:
+                            delta = timedelta(minutes=offset)
+                            hour = int(athan_times[prayer].split(":")[0])
+                            min = int(athan_times[prayer].split(":")[1])
+                            play_time = (
+                                datetime.now().replace(hour=hour, minute=min) - delta
+                            )
+                            notifications.append(
+                                {
+                                    "athan": prayer,
+                                    "type": "notification",
+                                    "hour": play_time.hour,
+                                    "min": play_time.minute,
+                                    "audio_id": audio_id,
+                                    "vol": volume,
+                                }
+                            )
     return notifications
 
 
@@ -82,8 +94,10 @@ def add_notifications(notifications):
         for notification in notifications:
             athan = notification["athan"]
             type = notification["type"]
+            audio_id = notification["audio_id"]
+            vol = notification["vol"]
             job = cron.new(
-                command=f"curl -X GET http://localhost:5002/speakers/play/{athan}/{type} > /dev/null 2>&1 # notification"
+                command=f"curl -X GET http://localhost:5002/speakers/play/{athan}/{type}/{audio_id}/{vol} > /dev/null 2>&1 # notification"
             )
             job.hour.on(notification["hour"])
             job.minute.on(notification["min"])
