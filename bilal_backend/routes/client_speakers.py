@@ -45,5 +45,5 @@ def play_notification_on_speaker(athan, type, audio_id, vol):
 @speakers.post("/test")
 @input(TestSoundSchema)
 @output(PlayedSchema)
-def test_sound_on_speaker(self, data):
+def test_sound_on_speaker(data):
     return test_sound(data)
