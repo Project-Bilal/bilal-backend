@@ -30,7 +30,7 @@ class Location(MethodView):
         lat = data.get("lat")
         long = data.get("long")
         address = data.get("address")
-        handler.set_user_location(lat, long, address)
+        print(handler.set_user_location(lat, long, address))
         return SUCCESS
 
 
@@ -44,13 +44,13 @@ def get_calculation():
 
 @settings.put("/method/<string:method>")
 def set_method(method):
-    handler.set_method(method)
+    print(handler.set_method(method))
     return SUCCESS
 
 
 @settings.put("/jurisprudence/<string:jurisprudence>")
 def set_jurisprudence(jurisprudence):
-    handler.set_jurisprudence(jurisprudence)
+    print(handler.set_jurisprudence(jurisprudence))
     return SUCCESS
 
 

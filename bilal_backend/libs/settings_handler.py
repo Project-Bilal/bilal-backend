@@ -12,7 +12,7 @@ def set_user_location(data, lat, long, address):
     tz = get_tz(lat, long)
     location = {"address": address, "lat": lat, "long": long, "tz": tz}
     data.set("location", location)
-    sched_notifications()
+    return sched_notifications()
 
 
 @db_context
@@ -28,7 +28,7 @@ def set_method(data, method):
     calc = data.get("calculation", {})
     calc.update({"method": method})
     data.set("calculation", calc)
-    sched_notifications()
+    return sched_notifications()
 
 
 @db_context
@@ -36,7 +36,7 @@ def set_jurisprudence(data, jurisprudence):
     calc = data.get("calculation", {})
     calc.update({"jurisprudence": jurisprudence})
     data.set("calculation", calc)
-    sched_notifications()
+    return sched_notifications()
 
 
 @db_context
