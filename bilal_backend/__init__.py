@@ -18,7 +18,7 @@ CORS(app)
 LightDB(DATA_FILE)
 
 # add cronjob that schedules the notifications
-add_notification_scheduler()
+print(add_notification_scheduler())
 
 # schedule the initial notifications
-sched_notifications()
+print(sched_notifications())

@@ -7,7 +7,7 @@ from bilal_backend.libs.chromecast_handler import (
 )
 from bilal_backend.spec.schemas import (
     SpeakersSchema,
-    PlayedSchema,
+    ResponseSchema,
     TestSoundSchema,
 )
 
@@ -23,7 +23,7 @@ def get_speakers_on_network():
 
 
 @speakers.get("/play/<string:audio_id>/<int:vol>")
-@output(PlayedSchema)
+@output(ResponseSchema)
 def play_notification_on_speaker(audio_id, vol):
     response = play_notification(audio_id=audio_id, vol=vol)
     if not response:
@@ -33,6 +33,6 @@ def play_notification_on_speaker(audio_id, vol):
 
 @speakers.post("/test")
 @input(TestSoundSchema)
-@output(PlayedSchema)
+@output(ResponseSchema)
 def test_sound_on_speaker(data):
     return test_sound(data)

@@ -101,7 +101,7 @@ class TestSoundSchema(Schema):
     speaker = fields.Nested(SpeakerSchema, required=True)
 
 
-class PlayedSchema(Schema):
+class ResponseSchema(Schema):
     message = fields.String()
 
 

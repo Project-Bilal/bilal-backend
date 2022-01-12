@@ -2,7 +2,6 @@ from crontab import CronTab
 from bilal_backend.libs.pt_handler import prayer_times_handler
 from bilal_backend.utils.utils import db_context
 import getpass
-import os
 from datetime import datetime, timedelta
 
 
@@ -14,12 +13,14 @@ def get_pt(data):
     method = calc.get("method", {})
     jur = calc.get("jurisprudence", "Standard")
     if not loc or not method:
+        print("###ERROR### 'location' or 'method' empty or missing in data.json")
         return None
     else:
         lat = loc.get("lat", None)
         long = loc.get("long", None)
         tz = loc.get("tz", None)
         if not lat or not long or not tz:
+            print("###ERROR### 'lat', 'long', or 'tz' empty or missing in data.json")
             return None
         return prayer_times_handler(
             lat=lat, long=long, tz=tz, calc=method, jur=jur, format="24h"
@@ -32,6 +33,7 @@ def get_pt(data):
 def get_cron_times(data, athan_times):
     data = data.get("athans", {})
     if not data:
+        print("###ERROR### 'athans' data object empty or missing in data.json")
         return None
     notifications = []
     for prayer in data:
@@ -72,18 +74,6 @@ def get_cron_times(data, athan_times):
     return notifications
 
 
-def add_notification_scheduler():
-    pwd = os.getcwd()
-    user = getpass.getuser()
-    with CronTab(user=user) as cron:
-        cron.remove_all(comment="bilal_scheduler")
-        job = cron.new(
-            command=f"curl -X GET http://localhost:5002/athans/schedule > /dev/null 2>&1 # bilal_scheduler"
-        )
-        job.hour.on(1)
-        job.minute.on(0)
-
-
 # schedule new notification times and remove existing ones
 def add_notifications(notifications):
     user = getpass.getuser()
@@ -97,15 +87,27 @@ def add_notifications(notifications):
             )
             job.hour.on(notification["hour"])
             job.minute.on(notification["min"])
-    return None
+    return "###SUCCESS### Added notification cron jobs succcessfully"
+
+
+# schedule the notification scheduler that runs at 1 AM local time daily
+def add_notification_scheduler():
+    user = getpass.getuser()
+    with CronTab(user=user) as cron:
+        cron.remove_all(comment="bilal_scheduler")
+        job = cron.new(
+            command=f"curl -X GET http://localhost:5002/athans/schedule > /dev/null 2>&1 # bilal_scheduler"
+        )
+        job.hour.on(1)
+        job.minute.on(0)
+    return "###SUCCESS### Added notificaton scheduler successfully"
 
 
 def sched_notifications():
     athan_times = get_pt()
     if not athan_times:
-        return None
+        return "###ERROR### get_pt is missing information. Will not schedule cron jobs."
     notifications = get_cron_times(athan_times)
     if not notifications:
-        return None
-    add_notifications(notifications)
-    return "Success"
+        return "###ERROR### Missing or empty information in data.json for the `athans` object"
+    return add_notifications(notifications)
