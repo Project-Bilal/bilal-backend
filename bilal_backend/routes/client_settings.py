@@ -73,3 +73,11 @@ class Speaker(MethodView):
 def reset():
     handler.reset()
     return SUCCESS
+
+@settings.get('/all')
+@doc(responses=[200])
+def get_all():
+    resp = handler.get_all()
+    if not resp:
+        abort(status_code=412, message="No data set!")
+    return resp

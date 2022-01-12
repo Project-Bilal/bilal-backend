@@ -57,3 +57,8 @@ def set_speaker(data, speaker: dict):
 @db_context
 def reset(data):
     data.reset()
+
+
+@db_context
+def get_all(data):
+    return data
