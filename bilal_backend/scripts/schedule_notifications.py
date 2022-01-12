@@ -30,7 +30,7 @@ def get_pt(data):
 # return a list of dicts with the information needed to schedule cronjobs
 @db_context
 def get_cron_times(data, athan_times):
-    data = data.get("athan", {})
+    data = data.get("athans", {})
     if not data:
         return None
     notifications = []
