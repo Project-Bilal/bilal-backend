@@ -20,6 +20,7 @@ prayer_times = APIBlueprint(
 @db_context
 def get_prayer_times(data):
     calc = data.get("calculation", {}).get("method", {})
+    jur = data.get("calculation", {}).get("jurisprudence", "Standard")
     location = data.get("location")
     if (
         not calc
@@ -37,6 +38,7 @@ def get_prayer_times(data):
         long=location.get("long"),
         tz=location.get("tz"),
         calc=calc,
+        jur=jur,
     )
 
 
