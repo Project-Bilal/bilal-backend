@@ -16,9 +16,11 @@ def get_pt(data):
     if not loc or not method:
         return None
     else:
-        lat = loc["lat"]
-        long = loc["long"]
-        tz = loc["tz"]
+        lat = loc.get("lat", None)
+        long = loc.get("long", None)
+        tz = loc.get("tz", None)
+        if not lat or not long or not tz:
+            return None
         return prayer_times_handler(
             lat=lat, long=long, tz=tz, calc=method, jur=jur, format="24h"
         )
