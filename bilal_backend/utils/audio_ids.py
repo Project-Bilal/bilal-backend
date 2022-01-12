@@ -14,19 +14,24 @@ audio = {
         "name": "Nasir Al-Qatami",
         "length": "10s",
         "audio_id": "1yqji2O4arMpd5-PZUpvNyKx-Xfj9KTOv",
-        "type": "takbir"
+        "type": "takbir",
     },
-
     "1aSmUrA6JdqrCBLnNiLspwQsWj5oW_vo7": {
         "name": "Mohammad Al-Amin Mosque Beirut",
         "length": "2m37s",
         "audio_id": "1aSmUrA6JdqrCBLnNiLspwQsWj5oW_vo7",
-        "type": "fajr"
+        "type": "fajr",
     },
     "1JsS_zHJgmJAqSyEhHLOjQhKZPEoYajZN": {
         "name": "Mohamed Tarek",
         "length": "2m30s",
         "audio_id": "1JsS_zHJgmJAqSyEhHLOjQhKZPEoYajZN",
-        "type": "athan"
+        "type": "athan",
+    },
+    "1jishJEjKVBqMqLhR4uPv8X8hjOKIIvgS": {
+        "name": "tweet",
+        "length": "1s",
+        "audio_id": "1jishJEjKVBqMqLhR4uPv8X8hjOKIIvgS",
+        "type": "notification",
     },
 }
