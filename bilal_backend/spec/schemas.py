@@ -2,10 +2,16 @@ from apiflask import Schema, fields, validators
 
 
 class AthanSchema(Schema):
-    name = fields.String(metadata={'description': 'Name of audio file to display to user'})
-    length = fields.String(metadata={'description': 'Length of audio file'})
-    id = fields.String(metadata={'description': 'ID of audio file to be passed back to settings'})
-    type = fields.String(metadata={'description': 'type: fajr, tabir, notifications or dua'})
+    name = fields.String(
+        metadata={"description": "Name of audio file to display to user"}
+    )
+    length = fields.String(metadata={"description": "Length of audio file"})
+    id = fields.String(
+        metadata={"description": "ID of audio file to be passed back to settings"}
+    )
+    type = fields.String(
+        metadata={"description": "type: fajr, tabir, notifications or dua"}
+    )
 
 
 class AthansSchema(Schema):
@@ -21,63 +27,73 @@ class LocationSchema(Schema):
 class CalculationSchema(Schema):
     calculation = fields.String(
         required=True,
-        validate=validators.OneOf([
-            "MWL",
-            "ISNA",
-            "Egypt",
-            "Makkah",
-            "Karachi",
-            "Tehran",
-            "Jafari",
-            "Moon",
-            "UAE",
-            "Kuwait",
-            "Qatar",
-            "Singapore",
-            'Jakarta',
-            'Turkey',
-            'France',
-            'Russia',
-            'Tunisia',
-            'Algeria'
-        ]),
-        metadata={'description': 'The calculation method used for deriving the prayer times.'}
+        validate=validators.OneOf(
+            [
+                "MWL",
+                "ISNA",
+                "Egypt",
+                "Makkah",
+                "Karachi",
+                "Tehran",
+                "Jafari",
+                "Moon",
+                "UAE",
+                "Kuwait",
+                "Qatar",
+                "Singapore",
+                "Jakarta",
+                "Turkey",
+                "France",
+                "Russia",
+                "Tunisia",
+                "Algeria",
+            ]
+        ),
+        metadata={
+            "description": "The calculation method used for deriving the prayer times."
+        },
     )
 
 
 class AudioSchema(Schema):
-    audio_id = fields.String(required=True,
-                             metadata={'description': 'id of the athan to be played on the speaker'})
+    audio_id = fields.String(
+        required=True,
+        metadata={"description": "id of the athan to be played on the speaker"},
+    )
 
 
 class VolumeSchema(Schema):
-    volume = fields.Integer(required=True,
-                            validate=validators.Range(min=0, max=10),
-                            metadata={'description': 'Volume of the speaker to be used for prayer calls'})
+    volume = fields.Integer(
+        required=True,
+        validate=validators.Range(min=0, max=10),
+        metadata={"description": "Volume of the speaker to be used for prayer calls"},
+    )
 
 
 class SpeakerSchema(Schema):
-    name = fields.String(required=True,
-                         metadata={'description': 'name of the speaker to be used for prayer calls'})
-    ip = fields.String(required=True,
-                       metadata={'description': 'ip address of the speaker'})
-    port = fields.Integer(required=True,
-                          metadata={'description': 'port of the speaker'})
-    uuid = fields.String(required=True,
-                         metadata={'description': 'uuid string of the speaker'})
-    model = fields.String(required=True,
-                          metadata={'description': 'model name of the speaker'})
-    cast_type = fields.String(required=False,
-                              metadata={'description': 'Group of devices or single device'})
+    name = fields.String(
+        required=True,
+        metadata={"description": "name of the speaker to be used for prayer calls"},
+    )
+    ip = fields.String(
+        required=True, metadata={"description": "ip address of the speaker"}
+    )
+    port = fields.Integer(
+        required=True, metadata={"description": "port of the speaker"}
+    )
+    uuid = fields.String(
+        required=True, metadata={"description": "uuid string of the speaker"}
+    )
+    model = fields.String(
+        required=True, metadata={"description": "model name of the speaker"}
+    )
+    cast_type = fields.String(
+        required=False, metadata={"description": "Group of devices or single device"}
+    )
 
 
 class SpeakersSchema(Schema):
     speakers = fields.List(fields.Nested(SpeakerSchema, required=True))
-
-
-class PlaySchema(Schema):
-    audio_id = fields.String(required=True)
-    audio_title = fields.String(required=False)
 
 
 class TestSoundSchema(Schema):

@@ -1,15 +1,18 @@
-from datetime import date
-
+from bilal_backend.libs.constants import JURISPRUDENCE
 from bilal_backend.utils.prayer_times import PrayTimes
+import time
 
-# TODO add option to prayTimes.adjust({'asr': 'Hanafi'})
-# TODO add functionality to account for DST
+
 def prayer_times_handler(
-    lat=None, long=None, tz=None, calc=None, format=None, jur=None
+    lat=None, long=None, tz=None, calc=None, format=None, jur=JURISPRUDENCE
 ):
+    dt = time.localtime()
     pray_times = PrayTimes(calMethod=calc)
-    if jur:
-        pray_times.adjust({"asr": jur})
+    pray_times.adjust({"asr": jur})
     return pray_times.getTimes(
-        date=date.today(), coords=(lat, long), timezone=tz, format=format
+        date=(dt.tm_year, dt.tm_mon, dt.tm_mday),
+        coords=(lat, long),
+        timezone=tz,
+        format=format,
+        dst=dt.tm_isdst,
     )

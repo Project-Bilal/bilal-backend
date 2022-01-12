@@ -33,29 +33,11 @@ def get_speakers():
     return {"speakers": speakers}
 
 
-# play on the default speaker given an audio_id
-@db_context
-def play_sound(data, audio_id, audio_title=DEFAULT_AUDIO_TITLE):
-    vol = float(data.get("speaker")["volume"]) / 10
-    device = get_chromecast()
-    device.wait()
-    device.set_volume(vol)
-    mc = device.media_controller
-    mc.play_media(
-        GDRIVE_URL + audio_id,
-        "audio/mp3",
-        title=audio_title,
-        thumb=f"https://drive.google.com/uc?id={THUMB}",
-    )
-    return {"message": "Sound is played."}
-
-
 # play on the default speaker given a notification object
-@db_context
-def play_notification(data, athan, type, audio_id, vol):
-    vol = float(data.get("volume", 0)) / 10
-    if vol:
+def play_notification(audio_id=None, vol=None):
+    if not audio_id or not vol:
         return None
+    vol /= 10
     device = get_chromecast()
     device.wait()
     device.set_volume(vol)

@@ -4,6 +4,7 @@ DISCOVER_TIMEOUT = 5
 THUMB = "15SQIn_doa-SUdo65Zkp4ayfruMvCNwBC"
 DEFAULT_AUDIO_TITLE = "Project-Bilal"
 SUCCESS = "success"
+JURISPRUDENCE = "Standard"
 
 
 class PrayerNames:

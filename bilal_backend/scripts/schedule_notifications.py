@@ -12,7 +12,7 @@ def get_pt(data):
     loc = data.get("location", {})
     calc = data.get("calculation", {})
     method = calc.get("method", {})
-    jur = calc.get("jurisprudence", None)
+    jur = calc.get("jurisprudence", "Standard")
     if not loc or not method:
         return None
     else:
@@ -42,8 +42,6 @@ def get_cron_times(data, athan_times):
                     if audio_id:
                         notifications.append(
                             {
-                                "athan": prayer,
-                                "type": "athan",
                                 "hour": int(athan_times[prayer].split(":")[0]),
                                 "min": int(athan_times[prayer].split(":")[1]),
                                 "audio_id": audio_id,
@@ -63,8 +61,6 @@ def get_cron_times(data, athan_times):
                             )
                             notifications.append(
                                 {
-                                    "athan": prayer,
-                                    "type": "notification",
                                     "hour": play_time.hour,
                                     "min": play_time.minute,
                                     "audio_id": audio_id,
@@ -92,12 +88,10 @@ def add_notifications(notifications):
     with CronTab(user=user) as cron:
         cron.remove_all(comment="notification")
         for notification in notifications:
-            athan = notification["athan"]
-            type = notification["type"]
             audio_id = notification["audio_id"]
             vol = notification["vol"]
             job = cron.new(
-                command=f"curl -X GET http://localhost:5002/speakers/play/{athan}/{type}/{audio_id}/{vol} > /dev/null 2>&1 # notification"
+                command=f"curl -X GET http://localhost:5002/speakers/play/{audio_id}/{vol} > /dev/null 2>&1 # notification"
             )
             job.hour.on(notification["hour"])
             job.minute.on(notification["min"])
