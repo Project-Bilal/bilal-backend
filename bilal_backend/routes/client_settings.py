@@ -7,13 +7,15 @@ from bilal_backend.spec.schemas import (
     SpeakerSchema,
 )
 
-settings = APIBlueprint(import_name="User Settings",
-                        name="User Settings",
-                        tag="User Settings",
-                        url_prefix='/settings')
+settings = APIBlueprint(
+    import_name="User Settings",
+    name="User Settings",
+    tag="User Settings",
+    url_prefix="/settings",
+)
 
 
-@settings.route('/location')
+@settings.route("/location")
 class Location(MethodView):
     @doc(responses=[200, 412])
     def get(self):
@@ -25,14 +27,14 @@ class Location(MethodView):
     @input(LocationSchema)
     @doc(responses=[200])
     def put(self, data):
-        lat = data.get('lat')
-        long = data.get('long')
-        address = data.get('address')
+        lat = data.get("lat")
+        long = data.get("long")
+        address = data.get("address")
         handler.set_user_location(lat, long, address)
         return SUCCESS
 
 
-@settings.get('/calculation')
+@settings.get("/calculation")
 def get_calculation():
     resp = handler.get_user_calculation()
     if not resp:
@@ -40,19 +42,19 @@ def get_calculation():
     return resp
 
 
-@settings.put('/method/<string:method>')
+@settings.put("/method/<string:method>")
 def set_method(method):
     handler.set_method(method)
     return SUCCESS
 
 
-@settings.put('/jurisprudence/<string:jurisprudence>')
+@settings.put("/jurisprudence/<string:jurisprudence>")
 def set_jurisprudence(jurisprudence):
     handler.set_jurisprudence(jurisprudence)
     return SUCCESS
 
 
-@settings.route('/speaker')
+@settings.route("/speaker")
 class Speaker(MethodView):
     @doc(responses=[200, 412])
     def get(self):
@@ -68,13 +70,14 @@ class Speaker(MethodView):
         return SUCCESS
 
 
-@settings.delete('/reset')
+@settings.delete("/reset")
 @doc(responses=[200])
 def reset():
     handler.reset()
     return SUCCESS
 
-@settings.get('/all')
+
+@settings.get("/all")
 @doc(responses=[200])
 def get_all():
     resp = handler.get_all()
