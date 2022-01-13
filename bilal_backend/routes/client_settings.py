@@ -27,10 +27,12 @@ class Location(MethodView):
     @input(LocationSchema)
     @doc(responses=[200])
     def put(self, data):
-        lat = data.get("lat")
-        long = data.get("long")
-        address = data.get("address")
-        print(handler.set_user_location(lat, long, address))
+        lat = data.get('lat')
+        long = data.get('long')
+        address = data.get('address')
+        resp = handler.set_user_location(lat, long, address)
+        if not resp:
+            abort(status_code=404, message='Invalid Lat/Long')
         return SUCCESS
 
 

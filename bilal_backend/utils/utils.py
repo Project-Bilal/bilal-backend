@@ -41,6 +41,9 @@ def athans_settings_context(f):
     return wrapper
 
 
+jurisprudence = [{'label': 'Standard', 'details': "Shafa'i, Malaki, Hambali"},
+                 {'label': 'Hanafi', 'details': "Hanafi"}]
+
 calculations = {
     "MWL": {
         "name": "Muslim World League",

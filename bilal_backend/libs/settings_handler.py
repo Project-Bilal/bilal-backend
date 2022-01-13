@@ -1,4 +1,6 @@
-from bilal_backend.utils.utils import get_tz, db_context, calculations
+from pytz.exceptions import UnknownTimeZoneError
+from bilal_backend.utils.utils import get_tz, db_context, calculations, jurisprudence
+from bilal_backend.utils.audio_ids import audio
 from bilal_backend.scripts.schedule_notifications import sched_notifications
 
 
@@ -9,10 +11,19 @@ def get_user_location(data):
 
 @db_context
 def set_user_location(data, lat, long, address):
-    tz = get_tz(lat, long)
-    location = {"address": address, "lat": lat, "long": long, "tz": tz}
-    data.set("location", location)
-    return sched_notifications()
+    try:
+        tz = get_tz(lat, long)
+    except UnknownTimeZoneError:
+        return False
+    location = {
+        'address': address,
+        'lat': lat,
+        'long': long,
+        'tz': tz
+    }
+    data.set('location', location)
+    sched_notifications()
+    return True
 
 
 @db_context
@@ -56,4 +67,10 @@ def reset(data):
 
 @db_context
 def get_all(data):
-    return data
+    resp = {}
+    resp.update({'methods': calculations})
+    resp.update({'jurisprudence': jurisprudence})
+    resp.update({'audio': audio})
+    if data:
+        resp.update(data)
+    return resp
