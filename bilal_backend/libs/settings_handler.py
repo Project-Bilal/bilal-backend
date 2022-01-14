@@ -1,4 +1,3 @@
-from pytz.exceptions import UnknownTimeZoneError
 from bilal_backend.utils.utils import get_tz, db_context, calculations, jurisprudence
 from bilal_backend.utils.audio_ids import audio
 from bilal_backend.scripts.schedule_notifications import sched_notifications
@@ -13,7 +12,7 @@ def get_user_location(data):
 def set_user_location(data, lat, long, address):
     try:
         tz = get_tz(lat, long)
-    except UnknownTimeZoneError:
+    except:
         return False
     location = {
         'address': address,
