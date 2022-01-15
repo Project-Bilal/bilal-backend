@@ -21,7 +21,7 @@ def db_context(f):
     def wrapper(*args, **kwargs):
         db = LightDB(DATA_FILE)
         resp = f(db, *args, **kwargs)
-        del db
+        db.save()
         return resp
 
     return wrapper
