@@ -48,6 +48,8 @@ def play_notification(audio_id=None, vol=None):
         title=DEFAULT_AUDIO_TITLE,
         thumb=f"https://drive.google.com/uc?id={THUMB}",
     )
+    device.disconnect()
+    del device
     return {"message": "Sound is played."}
 
 
@@ -62,6 +64,8 @@ def test_sound(data):
         title="This is a test from Project-Bilal..",
         thumb=f"https://drive.google.com/uc?id={THUMB}",
     )
+    device.disconnect()
+    del device
     return {"message": "Sound is played."}
 
 
@@ -93,4 +97,7 @@ def discover_devices(max_devices=None, timeout=DISCOVER_TIMEOUT):
 
     # Wait for the timeout or the maximum number of devices
     discover_complete.wait(timeout)
-    return list(browser.devices.values())
+    del discover_complete
+    resp = list(browser.devices.values())
+    del browser
+    return resp
