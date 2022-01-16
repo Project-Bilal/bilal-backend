@@ -2,7 +2,7 @@
 
 ## To run the server: ##
 
-1. `pip3 install pipenv` pipenv needs to be installed
+1. `sudo -H pip3 install -U pipenv` pipenv needs to be installed
 2. `pipenv install` to setup the environment and install pacakges
 3. `pipenv run python3 app.py` start the server
 
