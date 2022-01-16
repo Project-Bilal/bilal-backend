@@ -34,7 +34,7 @@ class Location(MethodView):
         resp = handler.set_user_location(lat, long, address)
         if not resp:
             abort(status_code=404, message='Invalid Lat/Long')
-        print(sched_notifications())
+        # print(sched_notifications())
         return SUCCESS
 
 
