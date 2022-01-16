@@ -1,5 +1,6 @@
 from bilal_backend.utils.utils import get_tz, db_context, calculations, jurisprudence
 from bilal_backend.utils.audio_ids import audio
+import sys
 
 
 @db_context
@@ -12,12 +13,13 @@ def set_user_location(data, lat, long, address):
     try:
         tz = get_tz(lat, long)
     except:
+        print("tz failed", sys.stderr)
         return False
     location = {
         'address': address,
-        'lat': lat,
-        'long': long,
-        'tz': tz
+        'lat': str(lat),
+        'long': str(long),
+        'tz': str(tz)
     }
     data.set('location', location)
     return True
