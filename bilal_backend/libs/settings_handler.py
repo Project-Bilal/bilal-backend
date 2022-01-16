@@ -1,6 +1,5 @@
 from bilal_backend.utils.utils import get_tz, db_context, calculations, jurisprudence
 from bilal_backend.utils.audio_ids import audio
-from bilal_backend.scripts.schedule_notifications import sched_notifications
 
 
 @db_context
@@ -21,7 +20,6 @@ def set_user_location(data, lat, long, address):
         'tz': tz
     }
     data.set('location', location)
-    sched_notifications()
     return True
 
 
@@ -38,7 +36,7 @@ def set_method(data, method):
     calc = data.get("calculation", {})
     calc.update({"method": method})
     data.set("calculation", calc)
-    return sched_notifications()
+    return True
 
 
 @db_context
@@ -46,7 +44,7 @@ def set_jurisprudence(data, jurisprudence):
     calc = data.get("calculation", {})
     calc.update({"jurisprudence": jurisprudence})
     data.set("calculation", calc)
-    return sched_notifications()
+    return True
 
 
 @db_context
