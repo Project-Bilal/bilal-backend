@@ -1,5 +1,6 @@
 from apiflask import APIBlueprint, input, abort, doc
 from flask.views import MethodView
+from bilal_backend.scripts.schedule_notifications import sched_notifications
 from bilal_backend.libs.constants import SUCCESS
 from bilal_backend.libs import settings_handler as handler
 from bilal_backend.spec.schemas import (
@@ -33,6 +34,7 @@ class Location(MethodView):
         resp = handler.set_user_location(lat, long, address)
         if not resp:
             abort(status_code=404, message='Invalid Lat/Long')
+        print(sched_notifications())
         return SUCCESS
 
 
@@ -46,13 +48,15 @@ def get_calculation():
 
 @settings.put("/method/<string:method>")
 def set_method(method):
-    print(handler.set_method(method))
+    handler.set_method(method)
+    print(sched_notifications())
     return SUCCESS
 
 
 @settings.put("/jurisprudence/<string:jurisprudence>")
 def set_jurisprudence(jurisprudence):
-    print(handler.set_jurisprudence(jurisprudence))
+    handler.set_jurisprudence(jurisprudence)
+    print(sched_notifications())
     return SUCCESS
 
 
