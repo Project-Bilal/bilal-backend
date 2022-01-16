@@ -23,11 +23,12 @@ def get_prayer_times(data):
     jur = data.get("calculation", {}).get("jurisprudence", "Standard")
     location = data.get("location")
     if (
-        not calc
-        or not location
-        or "lat" not in location
-        or "long" not in location
-        or "tz" not in location
+            not calc
+            or not jur
+            or not location
+            or "lat" not in location
+            or "long" not in location
+            or "tz" not in location
     ):
         abort(
             status_code=412,

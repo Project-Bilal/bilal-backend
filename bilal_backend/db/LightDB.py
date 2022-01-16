@@ -16,7 +16,6 @@ class LightDB(dict):
         if os.path.exists(self.location):
             file = open(self.location, "r")
             resp = json.load(file)
-            file.close()
         return resp
 
     def save(self):
