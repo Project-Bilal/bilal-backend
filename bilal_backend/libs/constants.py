@@ -1,10 +1,12 @@
 DATA_FILE = "bilal_backend/db/data.json"
 GDRIVE_URL = "https://drive.google.com/uc?export=download&id="
+GOOGLE_STORAGE_URL = "https://storage.googleapis.com/athans/"
 DISCOVER_TIMEOUT = 5
-THUMB = "15SQIn_doa-SUdo65Zkp4ayfruMvCNwBC"
+THUMB = "athan_logo.png"
 DEFAULT_AUDIO_TITLE = "Project-Bilal"
 SUCCESS = "success"
 JURISPRUDENCE = "Standard"
+MP3 = ".mp3"
 
 
 class PrayerNames:

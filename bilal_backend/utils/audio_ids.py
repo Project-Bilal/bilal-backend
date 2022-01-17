@@ -10,58 +10,67 @@ audio = {
 """
 
 audio = {
-    "1aSmUrA6JdqrCBLnNiLspwQsWj5oW_vo7": {
-        "name": "Mohammad Al-Amin Mosque Beirut",
+    "athan_fajr_1": {
+        "name": "Athan Fajr 1",
+        "desc": "Mohammad Al-Amin Mosque Beirut",
         "length": "2m37s",
-        "audio_id": "1aSmUrA6JdqrCBLnNiLspwQsWj5oW_vo7",
+        "audio_id": "athan_fajr_1",
         "type": "fajr",
     },
-    "1JsS_zHJgmJAqSyEhHLOjQhKZPEoYajZN": {
-        "name": "Mohamed Tarek",
+    "athan_1": {
+        "name": "Athan 1",
+        "desc": "Mishary Al Afasy Kuwait",
+        "length": "2m34s",
+        "audio_id": "athan_1",
+        "type": "athan",
+    },
+    "athan_2": {
+        "name": "Athan 2",
+        "desc": "Mohamed Tarek",
         "length": "2m30s",
-        "audio_id": "1JsS_zHJgmJAqSyEhHLOjQhKZPEoYajZN",
+        "audio_id": "athan_2",
         "type": "athan",
     },
-    "1xcm_FH9g98XIfi20v_ZEkVGlogWPPAAb": {
-        "name": "Mishary Al Afasy Kuwait",
-        "length": "2m35s",
-        "audio_id": "1xcm_FH9g98XIfi20v_ZEkVGlogWPPAAb",
+    "athan_4": {
+        "name": "Athan 4",
+        "desc": "Nasser Al Qattami KSA",
+        "length": "2m7s",
+        "audio_id": "athan_4",
         "type": "athan",
     },
-    "1D1GfkpBflMRGWK7iCoA6fcd8MGDXsQ3f": {
-        "name": "Nasser Al Qattami KSA",
-        "length": "2m8s",
-        "audio_id": "1D1GfkpBflMRGWK7iCoA6fcd8MGDXsQ3f",
-        "type": "athan",
-    },
-    "1PhEwqjrcsGBf_ka8mAT5W_KJxhABFKIq": {
-        "name": "Ameen Ka3sees Algeria",
+    "athan_3": {
+        "name": "Athan 3",
+        "desc": "Ameen Ka3sees Algeria",
         "length": "3m4s",
-        "audio_id": "1PhEwqjrcsGBf_ka8mAT5W_KJxhABFKIq",
+        "audio_id": "athan_3",
         "type": "athan",
     },
-    "1mGtIirLjg9w9FqqaF_ym5rYK5AR_3mOX": {
-        "name": "Mohammed Al Amin Oman",
+    "athan_6": {
+        "name": "Athan 6",
+        "desc": "Mohammed Al Amin Oman",
         "length": "3m24s",
-        "audio_id": "1mGtIirLjg9w9FqqaF_ym5rYK5AR_3mOX",
+        "audio_id": "athan_6",
         "type": "athan",
     },
-    "1OYnvJw6C65VhoeA2lI0f2DqfVTMPa9Rm": {
-        "name": "Bosnia",
+    "athan_5": {
+        "name": "Athan 5",
+        "desc": "Bosnia",
         "length": "2m49s",
-        "audio_id": "1OYnvJw6C65VhoeA2lI0f2DqfVTMPa9Rm",
+        "audio_id": "athan_5",
         "type": "athan",
     },
-    "1yqji2O4arMpd5-PZUpvNyKx-Xfj9KTOv": {
-        "name": "Nasir Al-Qatami KSA",
+    "takbir_1": {
+        "name": "Takbir 1",
+        "desc": "Nasir Al-Qatami KSA",
         "length": "10s",
-        "audio_id": "1yqji2O4arMpd5-PZUpvNyKx-Xfj9KTOv",
+        "audio_id": "takbir_1",
         "type": "takbir",
     },
-    "1jishJEjKVBqMqLhR4uPv8X8hjOKIIvgS": {
-        "name": "tweet",
+    "tweet": {
+        "name": "Tweet",
+        "desc": "Tweet",
         "length": "1s",
-        "audio_id": "1jishJEjKVBqMqLhR4uPv8X8hjOKIIvgS",
+        "audio_id": "tweet",
         "type": "notification",
     },
 }

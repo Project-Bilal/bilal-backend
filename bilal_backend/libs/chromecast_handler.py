@@ -8,7 +8,8 @@ from zeroconf import Zeroconf
 from uuid import UUID
 from bilal_backend.libs.constants import (
     DISCOVER_TIMEOUT,
-    GDRIVE_URL,
+    GOOGLE_STORAGE_URL,
+    MP3,
     THUMB,
     DEFAULT_AUDIO_TITLE,
 )
@@ -43,10 +44,10 @@ def play_notification(audio_id=None, vol=None):
     device.set_volume(vol)
     mc = device.media_controller
     mc.play_media(
-        GDRIVE_URL + audio_id,
+        GOOGLE_STORAGE_URL + audio_id + MP3,
         "audio/mp3",
         title=DEFAULT_AUDIO_TITLE,
-        thumb=f"https://drive.google.com/uc?id={THUMB}",
+        thumb=GOOGLE_STORAGE_URL + THUMB,
     )
     device.disconnect()
     del device
@@ -59,10 +60,10 @@ def test_sound(data):
     device.wait()
     mc = device.media_controller
     mc.play_media(
-        GDRIVE_URL + data["audio_id"],
+        GOOGLE_STORAGE_URL + data["audio_id"] + MP3,
         "audio/mp3",
         title="This is a test from Project-Bilal..",
-        thumb=f"https://drive.google.com/uc?id={THUMB}",
+        thumb=GOOGLE_STORAGE_URL + THUMB,
     )
     device.disconnect()
     del device
