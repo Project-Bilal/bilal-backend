@@ -14,7 +14,7 @@ def get_user_location(data):
 def set_user_location(data, lat, long, timezone):
     try:  # check timezone is legit
         datetime.now(pytz.timezone(timezone))
-    except UnknownTimeZoneError:
+    except:
         return False
     location = {
         'lat': lat,
