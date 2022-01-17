@@ -33,7 +33,7 @@ class Location(MethodView):
         timezone = data.get('timezone')
         resp = handler.set_user_location(lat, long, timezone)
         if not resp:
-            abort(status_code=404, message='Invalid Lat/Long')
+            abort(status_code=404, message='Timezone')
         print(sched_notifications())
         return SUCCESS
 
