@@ -1,6 +1,8 @@
-from bilal_backend.utils.utils import get_tz, db_context, calculations, jurisprudence
+from datetime import datetime
+import pytz
+from pytz.exceptions import UnknownTimeZoneError
 from bilal_backend.utils.audio_ids import audio
-import sys
+from bilal_backend.utils.utils import db_context, calculations, jurisprudence
 
 
 @db_context
@@ -9,17 +11,15 @@ def get_user_location(data):
 
 
 @db_context
-def set_user_location(data, lat, long, address):
-    try:
-        tz = get_tz(lat, long)
-    except:
-        print("tz failed", sys.stderr)
+def set_user_location(data, lat, long, timezone):
+    try:  # check timezone is legit
+        datetime.now(pytz.timezone(timezone))
+    except UnknownTimeZoneError:
         return False
     location = {
-        'address': address,
-        'lat': str(lat),
-        'long': str(long),
-        'tz': str(tz)
+        'lat': lat,
+        'long': long,
+        'tz': timezone
     }
     data.set('location', location)
     return True

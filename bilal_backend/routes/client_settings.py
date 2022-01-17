@@ -30,11 +30,11 @@ class Location(MethodView):
     def put(self, data):
         lat = data.get('lat')
         long = data.get('long')
-        address = data.get('address')
-        resp = handler.set_user_location(lat, long, address)
+        timezone = data.get('timezone')
+        resp = handler.set_user_location(lat, long, timezone)
         if not resp:
             abort(status_code=404, message='Invalid Lat/Long')
-        # print(sched_notifications())
+        print(sched_notifications())
         return SUCCESS
 
 

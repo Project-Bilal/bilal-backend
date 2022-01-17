@@ -21,7 +21,7 @@ class AthansSchema(Schema):
 class LocationSchema(Schema):
     lat = fields.Float()
     long = fields.Float()
-    address = fields.String()
+    timezone = fields.String()
 
 
 class CalculationSchema(Schema):
