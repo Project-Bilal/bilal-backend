@@ -1,6 +1,3 @@
-import pytz
-import datetime
-
 from apiflask import APIBlueprint, output, abort, doc
 from bilal_backend.utils.utils import db_context
 from bilal_backend.libs.pt_handler import prayer_times_handler
