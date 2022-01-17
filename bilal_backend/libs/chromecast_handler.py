@@ -47,7 +47,7 @@ def play_notification(audio_id=None, vol=None):
         GOOGLE_STORAGE_URL + audio_id + MP3,
         "audio/mp3",
         title=DEFAULT_AUDIO_TITLE,
-        thumb=GOOGLE_STORAGE_URL + THUMB,
+        thumb=THUMB,
     )
     device.disconnect()
     del device
@@ -63,7 +63,7 @@ def test_sound(data):
         GOOGLE_STORAGE_URL + data["audio_id"] + MP3,
         "audio/mp3",
         title="This is a test from Project-Bilal..",
-        thumb=GOOGLE_STORAGE_URL + THUMB,
+        thumb=THUMB,
     )
     device.disconnect()
     del device
