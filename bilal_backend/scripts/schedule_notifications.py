@@ -13,6 +13,7 @@ def get_pt(data):
     method = calc.get("method", {})
     jur = calc.get("jurisprudence", "Standard")
     if not loc or not method:
+        del_notifications()
         print("###ERROR### 'location' or 'method' empty or missing in data.json")
         return None
     else:
@@ -20,6 +21,7 @@ def get_pt(data):
         long = loc.get("long", None)
         tz = loc.get("tz", None)
         if not lat or not long or not tz:
+            del_notifications()
             print("###ERROR### 'lat', 'long', or 'tz' empty or missing in data.json")
             return None
         return prayer_times_handler(
@@ -33,6 +35,7 @@ def get_pt(data):
 def get_cron_times(data, athan_times):
     data = data.get("athans", {})
     if not data:
+        del_notifications()
         print("###ERROR### 'athans' data object empty or missing in data.json")
         return None
     notifications = []
@@ -74,11 +77,17 @@ def get_cron_times(data, athan_times):
     return notifications
 
 
-# schedule new notification times and remove existing ones
-def add_notifications(notifications):
+# delete existing crontab jobs
+def del_notifications():
     user = getpass.getuser()
     with CronTab(user=user) as cron:
         cron.remove_all(comment="notification")
+
+# schedule new notification times and remove existing ones
+def add_notifications(notifications):
+    user = getpass.getuser()
+    del_notifications()
+    with CronTab(user=user) as cron:
         for notification in notifications:
             audio_id = notification["audio_id"]
             vol = notification["vol"]
@@ -106,8 +115,10 @@ def add_notification_scheduler():
 def sched_notifications():
     athan_times = get_pt()
     if not athan_times:
+        del_notifications()
         return "###ERROR### get_pt is missing information. Will not schedule cron jobs."
     notifications = get_cron_times(athan_times)
     if not notifications:
+        del_notifications()
         return "###ERROR### Missing or empty information in data.json for the `athans` object"
     return add_notifications(notifications)

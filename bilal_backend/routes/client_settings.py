@@ -1,6 +1,6 @@
 from apiflask import APIBlueprint, input, abort, doc
 from flask.views import MethodView
-from bilal_backend.scripts.schedule_notifications import sched_notifications
+from bilal_backend.scripts.schedule_notifications import sched_notifications, del_notifications
 from bilal_backend.libs.constants import SUCCESS
 from bilal_backend.libs import settings_handler as handler
 from bilal_backend.spec.schemas import (
@@ -80,6 +80,7 @@ class Speaker(MethodView):
 @doc(responses=[200])
 def reset():
     handler.reset()
+    del_notifications()
     return SUCCESS
 
 
