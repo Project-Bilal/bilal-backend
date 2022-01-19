@@ -44,8 +44,10 @@ def get_cron_times(data, athan_times):
         volume = prayer_info.get("volume")
         audio_id = prayer_info.get("audio_id")
         notification_id = prayer_info.get("notification_id")
+        athan_on = prayer_info.get("athan_on")
+        notification_on = prayer_info.get("notification_on")
         offset = prayer_info.get("notification_time")
-        if prayer_info and volume and audio_id:
+        if prayer_info and volume and audio_id and athan_on:
             notifications.append(
                 {
                     "hour": int(athan_times[prayer].split(":")[0]),
@@ -54,7 +56,7 @@ def get_cron_times(data, athan_times):
                     "vol": volume,
                 }
             )
-            if notification_id and offset:
+            if notification_id and offset and notification_on:
                 delta = timedelta(minutes=offset)
                 hour = int(athan_times[prayer].split(":")[0])
                 min = int(athan_times[prayer].split(":")[1])
