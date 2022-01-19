@@ -19,7 +19,7 @@ prayer_times = APIBlueprint(
 def get_prayer_times(data):
     calc = data.get("calculation", {}).get("method", {})
     jur = data.get("calculation", {}).get("jurisprudence", "Standard")
-    location = data.get("location")
+    location = data.get("location", {})
     lat = location.get('lat')
     long = location.get('long')
     tz = location.get('tz')
