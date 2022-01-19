@@ -63,7 +63,7 @@ def get_cron_times(data, athan_times):
                     {
                         "hour": play_time.hour,
                         "min": play_time.minute,
-                        "audio_id": audio_id,
+                        "audio_id": notification_id,
                         "vol": volume,
                     }
                 )
