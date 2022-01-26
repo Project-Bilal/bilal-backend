@@ -135,3 +135,7 @@ class CalculationsSchema(Schema):
 
 class Toggle(Schema):
     on = fields.Boolean()
+
+
+class UserSettings(Schema):
+    user_settings = fields.Dict()
