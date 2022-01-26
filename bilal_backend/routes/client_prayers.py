@@ -2,7 +2,6 @@ from apiflask import APIBlueprint, output, abort, doc
 from bilal_backend.utils.utils import db_context
 from bilal_backend.libs.pt_handler import prayer_times_handler
 from bilal_backend.spec.schemas import PrayerTimesSchemas
-from bilal_backend.utils.utils import calculations
 
 prayer_times = APIBlueprint(
     import_name="Prayer Times",
@@ -35,9 +34,3 @@ def get_prayer_times(data):
         calc=calc,
         jur=jur,
     )
-
-
-@prayer_times.get("/calculations")
-@doc(responses=[200])
-def get_calculations():
-    return calculations

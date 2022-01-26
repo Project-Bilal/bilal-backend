@@ -1,4 +1,4 @@
-from apiflask import APIBlueprint, output, input, abort
+from apiflask import APIBlueprint, output, input
 from apiflask import abort
 from bilal_backend.libs.chromecast_handler import (
     get_speakers,

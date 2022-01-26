@@ -14,25 +14,6 @@ def db_context(f):
     return wrapper
 
 
-def athans_settings_context(f):
-    @wraps(f)
-    def wrapper(*args, **kwargs):
-        data = args[0]
-        prayer = args[1]
-        athans = data.get('athans', {})
-        prayer_athan_settings = athans.get(prayer, {})
-
-        prayer_athan_settings = f(prayer_athan_settings, *args, **kwargs)
-
-        athans.update({prayer: prayer_athan_settings})
-        data.set('athans', athans)
-
-    return wrapper
-
-
-jurisprudence = [{'label': 'Standard', 'details': "Shafa'i, Malaki, Hambali"},
-                 {'label': 'Hanafi', 'details': "Hanafi"}]
-
 calculations = {
     "MWL": {
         "name": "Muslim World League",
