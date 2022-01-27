@@ -9,7 +9,6 @@ from uuid import UUID
 from bilal_backend.libs.constants import (
     DISCOVER_TIMEOUT,
     GOOGLE_STORAGE_URL,
-    MP3,
     THUMB,
     DEFAULT_AUDIO_TITLE,
 )
@@ -46,7 +45,7 @@ def play_notification(audio_id=None, vol=None):
     device.set_volume(vol)
     mc = device.media_controller
     mc.play_media(
-        GOOGLE_STORAGE_URL + audio_id + MP3,
+        GOOGLE_STORAGE_URL + audio_id,
         "audio/mp3",
         title=DEFAULT_AUDIO_TITLE,
         thumb=THUMB,
@@ -62,7 +61,7 @@ def test_sound(data):
     device.wait()
     mc = device.media_controller
     mc.play_media(
-        GOOGLE_STORAGE_URL + data["audio_id"] + MP3,
+        GOOGLE_STORAGE_URL + data["audio_id"],
         "audio/mp3",
         title="This is a test from Project-Bilal..",
         thumb=THUMB,
