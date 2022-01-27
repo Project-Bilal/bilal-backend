@@ -38,8 +38,10 @@ def get_speakers():
 def play_notification(audio_id=None, vol=None):
     if not audio_id or not vol:
         return None
-    vol /= 10
+    vol /= 100
     device = get_chromecast()
+    if not device:
+        return {"message": "###ERROR### missing speaker information in 'data.json'"}
     device.wait()
     device.set_volume(vol)
     mc = device.media_controller
@@ -73,14 +75,21 @@ def test_sound(data):
 # return Chromecast object based on host info in db or passed SpeakerSchema
 @db_context
 def get_chromecast(data, speaker=None):
-    spkr = data["speaker"] if not speaker else speaker
-    host = (
-        spkr["ip"],
-        spkr["port"],
-        UUID(spkr["uuid"]),
-        spkr["model"],
-        spkr["name"],
-    )
+    spkr = data.get("settings", {}).get("speaker", {}) if not speaker else speaker
+    if not spkr:
+        print(
+            "###ERROR### 'settings' and/or 'speaker' data objects empty or missing in data.json"
+        )
+        return None
+    ip = spkr.get("ip", {})
+    port = spkr.get("port", {})
+    uuid = UUID(spkr.get("uuid", {}))
+    model = spkr.get("model", {})
+    name = spkr.get("name", {})
+    if not ip or not port or not uuid or not model or not name:
+        print("###ERROR### missing speaker information in data.json")
+        return None
+    host = (ip, port, uuid, model, name)
     return get_chromecast_from_host(host)
 
 
