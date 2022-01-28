@@ -8,45 +8,47 @@ from datetime import datetime, timedelta
 # get the prayer times from pt_handler
 @db_context
 def get_pt(data):
-    loc = data.get("location", {})
-    calc = data.get("calculation", {})
-    method = calc.get("method", {})
-    jur = calc.get("jurisprudence", "Standard")
-    if not loc or not method:
+    settings = data.get("settings", {})
+    if not settings:
         del_notifications()
-        print("###ERROR### 'location' or 'method' empty or missing in data.json")
+        print("###ERROR### no 'settings' object found in data.json")
         return None
-    else:
-        lat = loc.get("lat", None)
-        long = loc.get("long", None)
-        tz = loc.get("tz", None)
-        if not lat or not long or not tz:
-            del_notifications()
-            print("###ERROR### 'lat', 'long', or 'tz' empty or missing in data.json")
-            return None
-        return prayer_times_handler(
-            lat=lat, long=long, tz=tz, calc=method, jur=jur, format="24h"
+    lat = settings.get("lat", {})
+    long = settings.get("long", {})
+    method = settings.get("method", {})
+    tz = settings.get("tz", {})
+    jur = settings.get("jurisprudence", "Standard")
+    if not lat or not long or not method or not tz:
+        del_notifications()
+        print(
+            "###ERROR### 'lat' or 'long' or 'method' or 'tz' empty or missing in data.json"
         )
+        return None
+    return prayer_times_handler(
+        lat=lat, long=long, tz=tz, calc=method, jur=jur, format="24h"
+    )
 
 
 # convert the time the pt_handler gives us to hours and minutes to use with cron
 # return a list of dicts with the information needed to schedule cronjobs
 @db_context
 def get_cron_times(data, athan_times):
-    data = data.get("athans", {})
+    data = data.get("settings", {}).get("athans", {})
     if not data:
         del_notifications()
-        print("###ERROR### 'athans' data object empty or missing in data.json")
+        print(
+            "###ERROR### 'settings' and/or 'athans' data objects empty or missing in data.json"
+        )
         return None
     notifications = []
     for prayer in data:
         prayer_info = data.get(prayer, {})
-        volume = prayer_info.get("volume")
-        audio_id = prayer_info.get("audio_id")
-        notification_id = prayer_info.get("notification_id")
-        athan_on = prayer_info.get("athan_on")
-        notification_on = prayer_info.get("notification_on")
-        offset = prayer_info.get("notification_time")
+        volume = prayer_info.get("volume", {})
+        audio_id = prayer_info.get("athan", {}).get("value", {})
+        notification_id = prayer_info.get("notification", {}).get("value", {})
+        athan_on = prayer_info.get("athanToggle", {})
+        notification_on = prayer_info.get("notificationToggle", {})
+        offset = prayer_info.get("notificationTime", {})
         if prayer_info and volume and audio_id and athan_on:
             notifications.append(
                 {
@@ -60,7 +62,7 @@ def get_cron_times(data, athan_times):
                 delta = timedelta(minutes=offset)
                 hour = int(athan_times[prayer].split(":")[0])
                 min = int(athan_times[prayer].split(":")[1])
-                play_time = (datetime.now().replace(hour=hour, minute=min) - delta)
+                play_time = datetime.now().replace(hour=hour, minute=min) - delta
                 notifications.append(
                     {
                         "hour": play_time.hour,

@@ -6,7 +6,9 @@ from bilal_backend.libs.constants import JURISPRUDENCE
 from bilal_backend.utils.prayer_times import PrayTimes
 
 
-def prayer_times_handler(lat=None, long=None, tz=None, calc=None, format=None, jur=JURISPRUDENCE):
+def prayer_times_handler(
+    lat=None, long=None, tz=None, calc=None, format=None, jur=JURISPRUDENCE
+):
     dt = time.localtime()
     pray_times = PrayTimes(calMethod=calc)
     pray_times.adjust({"asr": jur})
