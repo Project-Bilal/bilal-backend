@@ -3,6 +3,7 @@ from pychromecast import (
     CastBrowser,
     SimpleCastListener,
     get_chromecast_from_host,
+    get_listed_chromecasts,
 )
 from zeroconf import Zeroconf
 from uuid import UUID
@@ -27,10 +28,27 @@ def get_speakers():
                 "port": device.port,
                 "uuid": str(device.uuid),
                 "model": device.model_name,
-                "cast_type": "Group" if device.cast_type else "Audio",
+                "cast_type": device.cast_type if device.cast_type else "audio",
             }
         )
     return {"speakers": speakers}
+
+
+def get_speaker(name):
+    device = get_listed_chromecasts(friendly_names=[name])[0]
+    # check to see if any chromecast was found
+    if not device[0]:
+        return False
+    device = device[0].cast_info
+    speaker_info = {
+        "cast_type": device.cast_type,
+        "port": device.port,
+        "name": name,
+        "ip": device.host,
+        "uuid": str(device.uuid),
+        "model": device.model_name,
+    }
+    return speaker_info
 
 
 # play on the default speaker given a notification object

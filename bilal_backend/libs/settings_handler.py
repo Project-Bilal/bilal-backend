@@ -1,4 +1,5 @@
 from bilal_backend.utils.utils import db_context
+from bilal_backend.libs.chromecast_handler import get_speaker
 from subprocess import run
 
 
@@ -14,11 +15,14 @@ def get_all(data):
 
 @db_context
 def set_all(data, user_settings):
-    data.set("settings", user_settings)
-    tz = data.get("settings", {}).get("tz", {})
-    if not tz:
+    tz = user_settings.get("tz", {})
+    speaker_name = user_settings.get("speaker", {})
+    if not tz or not speaker_name:
         return False
     rc = run(f"sudo timedatectl set-timezone {tz}", shell=True).returncode
-    if rc != 0:
+    speaker_info = get_speaker(speaker_name)
+    if rc != 0 or not speaker_info:
         return False
+    user_settings["speaker"] = speaker_info
+    data.set("settings", user_settings)
     return True
