@@ -12,7 +12,7 @@
 2. `pipenv install xxxx`
 
 ## Start Project Bilal on Reboot ##
-Install the service to autostart Project Bilal on every reboot
+Install the service to autostart Project Bilal on every reboot. Update paths as needed.
 
 1. `sudo vi /etc/systemd/system/bilal.service`
 
@@ -25,7 +25,7 @@ After=multi-user.target
 Type=idle
 User=pi
 Restart=always
-WorkingDirectory=/home/pi/bilal-backend
+WorkingDirectory=/home/bilal/bilal-backend
 ExecStart=/usr/local/bin/pipenv run python3 app.py
 
 [Install]
@@ -44,7 +44,7 @@ Upon reboot the device will establish a WiFi access to point to connect to calle
 1. Run the install script `bash <(curl -L https://github.com/balena-io/wifi-connect/raw/master/scripts/raspbian-install.sh)`
 2. Navigate to the location where the you want the startup script to execute from, preferably the user's home.
 3. Copy the startup script curl `https://raw.githubusercontent.com/Project-Bilal/bilal-backend/80dea6ce33ef122e88859c7b955a2da9cb5ef5b4/bilal_backend/scripts/start-wifi-connect.sh > start-wifi-connect.sh`
-4. Create a startup service `sudo vi /lib/systemd/system/wifi-connect-start.service`. Make sure to modify the start path accordingly.
+4. Create a startup service `sudo vi /lib/systemd/system/wifi-connect-start.service`. Update paths as needed.
 ```
 [Unit]
 Description=Balena wifi connect service
