@@ -21,6 +21,5 @@ def prayer_times_handler(
         date=(dt.tm_year, dt.tm_mon, dt.tm_mday),
         coords=(lat, long),
         timezone=tz_offset,
-        format=format,
-        dst=dt.tm_isdst,
+        format=format
     )
