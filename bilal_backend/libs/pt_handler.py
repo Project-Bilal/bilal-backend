@@ -17,9 +17,12 @@ def prayer_times_handler(
     # total seconds offset / minutes / hours to give total hours offset
     tz_offset = date.utcoffset().total_seconds() / 60 / 60
 
+    if dt.tm_isdst == 0:
+        tz_offset -= 1
+
     return pray_times.getTimes(
         date=(dt.tm_year, dt.tm_mon, dt.tm_mday),
         coords=(lat, long),
         timezone=tz_offset,
-        format=format
+        format=format,
     )
