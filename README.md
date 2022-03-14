@@ -1,18 +1,16 @@
 # Bilal backend Flask app #
 
-## To run the server: ##
+## To run the server ##
+**Prerequisite:** pipenv is installed `sudo -H pip3 install -U pipenv`
 
-1. `sudo -H pip3 install -U pipenv` pipenv needs to be installed
-2. `pipenv install` to setup the environment and install pacakges
-3. `pipenv run python3 app.py` start the server
+1. Clone and navigate into the repository
+2. `pipenv install` to install the the environment
+3. `pipenv run python3 app.py` to run the backend
 
-## To install new packages: ##
+To avoid running in the shell, follow the steps below to run Project Bilal as a service.
 
-1. `pipenv shell`
-2. `pipenv install xxxx`
-
-## Start Project Bilal on Reboot ##
-Install the service to autostart Project Bilal on every reboot. Update paths as needed.
+## Run Project Bilal as a Service ##
+Install the service to autostart Project Bilal on every reboot and run in the background. Update paths as needed.
 
 1. `sudo vi /etc/systemd/system/bilal.service`
 
