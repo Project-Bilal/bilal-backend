@@ -11,6 +11,31 @@
 1. `pipenv shell`
 2. `pipenv install xxxx`
 
+## Start Project Bilal on Reboot ##
+Install the service to autostart Project Bilal on every reboot
+
+1. `sudo vi /etc/systemd/system/bilal.service`
+
+```
+[Unit]
+Description=Bilal Service
+After=multi-user.target
+
+[Service]
+Type=idle
+User=pi
+Restart=always
+WorkingDirectory=/home/pi/bilal-backend
+ExecStart=/usr/local/bin/pipenv run python3 app.py
+
+[Install]
+WantedBy=multi-user.target
+```
+
+2. `sudo systemctl daemon-reload`
+3. `sudo systemctl enable bilal.service`
+4. `sudo systemctl start bilal.service`
+
 ## Install WiFi Connect - OPTIONAL ##
 An easy way to connect the device to a new WiFi access point using a mobile device.
 Credit to: https://github.com/balena-os/wifi-connect
