@@ -105,7 +105,7 @@ def add_notification_scheduler():
         job = cron.new(
             command=f"curl -X GET http://localhost:5002/athans/schedule > /dev/null 2>&1 # bilal_scheduler"
         )
-        job.hour.on(1)
+        job.hour.on(3)
         job.minute.on(0)
     return "###SUCCESS### Added notificaton scheduler successfully"
 
