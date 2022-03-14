@@ -14,6 +14,7 @@
 # Install WiFi Connect #
 An easy way to connect the device to a new WiFi access point using a mobile device.
 Credit to: https://github.com/balena-os/wifi-connect
+Upon reboot the device will establish a WiFi access to point to connect to called `Project Bilal WiFi`. Connect to this access point on your mobile device and follow the prompt to enter in the desired WiFi connection. Once the connection is established `Project Bilal WiFi` will disappear.
 
 1. Run the install script `bash <(curl -L https://github.com/balena-io/wifi-connect/raw/master/scripts/raspbian-install.sh)`
 2. Navigate to the location where the you want the startup script to execute from, preferably the user's home.
