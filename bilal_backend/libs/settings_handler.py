@@ -33,4 +33,7 @@ def update(data):
     rc = run(f"git pull origin master", shell=True).returncode
     if rc != 0:
         return False
+    rc = run(f"sudo systemctl enable bilal.service", shell=True).returncode
+    if rc != 0:
+        return False
     return data
