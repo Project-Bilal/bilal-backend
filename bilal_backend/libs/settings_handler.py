@@ -28,7 +28,6 @@ def set_all(data, user_settings):
     return True
 
 
-@db_context
 def update(data):
     rc = run(f"git pull origin master", shell=True).returncode
     if rc != 0:
@@ -36,4 +35,4 @@ def update(data):
     rc = run(f"sudo systemctl enable bilal.service", shell=True).returncode
     if rc != 0:
         return False
-    return data
+    return True

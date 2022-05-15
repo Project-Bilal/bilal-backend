@@ -47,7 +47,7 @@ def set_all(data):
 @settings.get("/update")
 @doc(responses=[200])
 def update():
-    resp = handler.get_all()
+    resp = handler.update()
     if not resp:
         abort(status_code=412, message="Failed to update!")
     return resp

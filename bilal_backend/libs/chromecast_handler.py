@@ -109,6 +109,3 @@ def get_chromecast(data, speaker=None):
         return None
     host = (ip, port, uuid, model, name)
     return get_chromecast_from_host(host)
-
-
-# this is a test
