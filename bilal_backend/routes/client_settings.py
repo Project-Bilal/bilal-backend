@@ -50,4 +50,4 @@ def update():
     resp = handler.update()
     if not resp:
         abort(status_code=412, message="Failed to update!")
-    return resp
+    return SUCCESS
