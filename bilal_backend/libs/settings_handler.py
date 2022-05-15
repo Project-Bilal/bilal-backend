@@ -28,11 +28,11 @@ def set_all(data, user_settings):
     return True
 
 
-def update(data):
+def update():
     rc = run(f"git pull origin master", shell=True).returncode
     if rc != 0:
         return False
-    rc = run(f"sudo systemctl enable bilal.service", shell=True).returncode
+    rc = run(f"sudo systemctl restart bilal.service", shell=True).returncode
     if rc != 0:
         return False
     return True
