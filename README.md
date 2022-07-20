@@ -25,7 +25,7 @@ Type=idle
 User=bilal
 Restart=always
 WorkingDirectory=/home/bilal/bilal-backend
-ExecStart=/usr/local/bin/penv run python3 app.py
+ExecStart=/usr/local/bin/pipenv run python3 app.py
 
 [Install]
 WantedBy=multi-user.target
