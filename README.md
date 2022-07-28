@@ -68,4 +68,5 @@ WantedBy=multi-user.target
 ```
 5. Enable the service `sudo systemctl enable wifi-connect-start.service`
 6. Reboot `sudo reboot`
+
 OPTIONAL: edit the SVG file in `/usr/local/share/wifi-connect/ui/static/media` for branding
