@@ -12,14 +12,14 @@ def prayer_times_handler(
     dt = time.localtime()
     pray_times = PrayTimes(calMethod=calc)
     pray_times.adjust({"asr": jur})
-    
-    timezone = pytz.timezone(tz)
-    now = datetime.datetime.now(timezone)
-    is_dst = now.dst() != datetime.timedelta(0)
-    tz_offset = now.utcoffset().total_seconds() / 3600
-    if is_dst:
-        tz_offset += 1
-    
+
+    date = datetime.datetime.now(pytz.timezone(tz))
+    # total seconds offset / minutes / hours to give total hours offset
+    tz_offset = date.utcoffset().total_seconds() / 60 / 60
+
+    if dt.tm_isdst != 0:
+        tz_offset -= 1
+
     return pray_times.getTimes(
         date=(dt.tm_year, dt.tm_mon, dt.tm_mday),
         coords=(lat, long),
