@@ -16,7 +16,7 @@ def prayer_times_handler(
     timezone = pytz.timezone(tz)
     now = datetime.datetime.now(timezone)
     is_dst = now.dst() != datetime.timedelta(0)
-    offset = now.utcoffset().total_seconds() / 3600
+    tz_offset = now.utcoffset().total_seconds() / 3600
     if is_dst:
         tz_offset += 1
     
