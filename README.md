@@ -2,11 +2,11 @@
 
 ## To run the server ##
 **Prerequisite:** 
-penv is installed `sudo -H pip3 install -U pipenv`
+pipenv is installed - https://pipenv.pypa.io/en/latest/installation/
 
 1. Clone and navigate into the repository
 2. `pipenv install --ignore-pipfile` to install the the environment
-3. `pipenv run python3 app.py` to run the backend
+3. `pipenv run python app.py` to run the backend
 
 To avoid running in the shell, follow the steps below to run Project Bilal as a service.
 
@@ -25,7 +25,7 @@ Type=idle
 User=bilal
 Restart=always
 WorkingDirectory=/home/bilal/bilal-backend
-ExecStart=/usr/local/bin/pipenv run python3 app.py
+ExecStart=/usr/local/bin/pipenv run python app.py
 
 [Install]
 WantedBy=multi-user.target
