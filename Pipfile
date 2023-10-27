@@ -4,13 +4,13 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-pychromecast = "*"
-apiflask = "0.11.0"
+apiflask = "*"
 flask-cors = "*"
-pytz = "*"
 python-crontab = "*"
+pytz = "*"
+pychromecast = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.9"
+python_version = "3.11"

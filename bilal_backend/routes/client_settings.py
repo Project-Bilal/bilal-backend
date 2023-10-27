@@ -1,4 +1,4 @@
-from apiflask import APIBlueprint, abort, doc, input
+from apiflask import APIBlueprint, abort
 from bilal_backend.spec.schemas import UserSettings
 from bilal_backend.scripts.schedule_notifications import (
     del_notifications,
@@ -16,7 +16,7 @@ settings = APIBlueprint(
 
 
 @settings.delete("/reset")
-@doc(responses=[200])
+@settings.doc(responses=[200])
 def reset():
     handler.reset()
     del_notifications()
@@ -24,7 +24,7 @@ def reset():
 
 
 @settings.get("/all")
-@doc(responses=[200])
+@settings.doc(responses=[200])
 def get_all():
     resp = handler.get_all()
     if not resp:
@@ -33,8 +33,8 @@ def get_all():
 
 
 @settings.post("/all")
-@input(UserSettings)
-@doc(responses=[200])
+@settings.input(UserSettings)
+@settings.doc(responses=[200])
 def set_all(data):
     user_settings = data.get("user_settings")
     resp = handler.set_all(user_settings)
@@ -45,7 +45,7 @@ def set_all(data):
 
 
 @settings.get("/update")
-@doc(responses=[200])
+@settings.doc(responses=[200])
 def update():
     resp = handler.update()
     if not resp:
