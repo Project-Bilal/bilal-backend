@@ -47,7 +47,7 @@ Upon reboot the device will establish a WiFi access point to connect to called `
 1. Navigate to the home folder `cd ~`
 2. Run the install script `bash <(curl -L https://github.com/balena-io/wifi-connect/raw/master/scripts/raspbian-install.sh)`
 3. Copy the startup script `curl https://raw.githubusercontent.com/Project-Bilal/bilal-backend/80dea6ce33ef122e88859c7b955a2da9cb5ef5b4/bilal_backend/scripts/start-wifi-connect.sh > start-wifi-connect.sh`
-4. Make the file executable `chmod +x start-wifi=connect.sh`
+4. Make the file executable `chmod +x start-wifi-connect.sh`
 5. Create a startup service `sudo vi /lib/systemd/system/wifi-connect-start.service`. Update paths as needed.
 ```
 [Unit]
