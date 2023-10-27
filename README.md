@@ -5,7 +5,7 @@
 penv is installed `sudo -H pip3 install -U pipenv`
 
 1. Clone and navigate into the repository
-2. `pipenv install` to install the the environment
+2. `pipenv install --ignore-pipfile` to install the the environment
 3. `pipenv run python3 app.py` to run the backend
 
 To avoid running in the shell, follow the steps below to run Project Bilal as a service.
